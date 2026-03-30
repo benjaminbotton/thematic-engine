@@ -19,10 +19,7 @@ from datetime import date
 from pathlib import Path
 from typing import Optional
 
-try:
-    import anthropic
-except ImportError:
-    anthropic = None
+# anthropic is imported inside generate_pod_from_news() to avoid top-level dependency
 
 
 @dataclass
