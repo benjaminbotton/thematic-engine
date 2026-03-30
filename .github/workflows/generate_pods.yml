@@ -24,118 +24,100 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt anthropic
+        run: pip install anthropic requests pyyaml
 
       - name: Fetch headlines and generate pod
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          python3 -c "
-          import os, sys, json, yaml
-          from datetime import date, timedelta
+          python3 << 'PYEOF'
+          import os, sys, json, yaml, requests, xml.etree.ElementTree as ET
+          import anthropic
+          from datetime import date
           from pathlib import Path
 
-          sys.path.insert(0, 'src')
-
-          # Fetch top financial headlines via free API
-          import requests
+          # 1. Fetch headlines
           try:
-              # Use Google News RSS as headline source
               resp = requests.get(
                   'https://news.google.com/rss/search?q=stock+market+economy+when:7d&hl=en-US&gl=US&ceid=US:en',
-                  timeout=15,
-                  headers={'User-Agent': 'Mozilla/5.0'}
-              )
-              import xml.etree.ElementTree as ET
+                  timeout=15, headers={'User-Agent': 'Mozilla/5.0'})
               root = ET.fromstring(resp.text)
-              headlines = []
-              for item in root.findall('.//item')[:20]:
-                  title = item.find('title')
-                  if title is not None and title.text:
-                      headlines.append(title.text)
-              print(f'Fetched {len(headlines)} headlines')
-              for h in headlines[:5]:
-                  print(f'  - {h}')
+              headlines = [item.find('title').text for item in root.findall('.//item')[:20]
+                           if item.find('title') is not None and item.find('title').text]
           except Exception as e:
               print(f'Headline fetch failed: {e}')
-              # Fallback headlines
-              headlines = [
-                  'Market volatility increases amid trade uncertainty',
-                  'Fed officials signal cautious approach to rate changes',
-                  'AI spending continues to accelerate across hyperscalers',
-                  'Consumer confidence diverges by income bracket',
-                  'Defense budgets expand as geopolitical tensions rise',
-              ]
+              headlines = ['Market volatility amid trade uncertainty',
+                           'Fed signals cautious rate approach', 'AI capex accelerating',
+                           'Consumer confidence diverges by income', 'Defense budgets expanding']
 
-          # Generate pod via Claude
-          from pod_generator import generate_pod_from_news
-          try:
-              pod = generate_pod_from_news(headlines)
-              if pod is None:
-                  print('LLM returned no pod')
-                  sys.exit(0)
+          print(f'Fetched {len(headlines)} headlines')
+          for h in headlines[:5]:
+              print(f'  - {h}')
 
-              print(f'Generated pod: {pod.name} ({pod.pod_id})')
-              print(f'  Long: {[t[\"ticker\"] for t in pod.long_tickers]}')
-              print(f'  Short: {[t[\"ticker\"] for t in pod.short_tickers]}')
+          # 2. Call Claude API
+          SYSTEM = """You are a quantitative analyst identifying thematic catalysts for pairs trading.
+          Given financial news headlines, identify ONE emerging macro catalyst that creates clear winners and losers.
+          Output a JSON object with: pod_id, name, thesis_core, thesis_long, thesis_short, confidence,
+          long_tickers (list of {ticker, name, thesis}), short_tickers (same format),
+          pair_hints (list of {long, short, rationale}).
+          Requirements: 6-10 tickers per side, US-listed, >$500M cap, mid-caps preferred ($1B-$15B).
+          Both sides must be exposed to the SAME catalyst from opposite sides."""
 
-              # Write as YAML pod file
-              pod_dir = Path('config/pods')
-              # Find next available number
-              existing = sorted(pod_dir.glob('*.yaml'))
-              next_num = len(existing) + 1
+          prompt = "Here are today's financial headlines:\n\n"
+          for h in headlines:
+              prompt += f"- {h}\n"
+          prompt += "\nIdentify the strongest emerging catalyst for a pairs trade and output the JSON."
 
-              pod_yaml = {
-                  'pod_id': pod.pod_id,
-                  'name': pod.name,
-                  'status': 'ACTIVE',
-                  'created_date': date.today().isoformat(),
-                  'source': 'llm_generated',
-                  'expires': pod.expiry_date,
-                  'thesis': {
-                      'core': pod.thesis_core,
-                      'long': pod.thesis_long,
-                      'short': pod.thesis_short,
-                      'last_validated': date.today().isoformat(),
-                      'confidence': pod.confidence,
-                      'invalidation_triggers': ['LLM-generated — review weekly'],
-                  },
-                  'watch_events': [
-                      {'event': 'Auto-generated catalyst', 'expected': 'ongoing', 'status': 'active',
-                       'impact': pod.thesis_core[:100], 'notes': 'Generated by Claude API'},
-                  ],
-                  'evolution_log': [
-                      {'date': date.today().isoformat(), 'note': f'Pod auto-generated from {len(headlines)} news headlines'},
-                  ],
-                  'watchlist': {
-                      'long': [{'ticker': t['ticker'], 'name': t['name'], 'thesis': t['thesis'],
-                                'status': 'active', 'added': date.today().isoformat()}
-                               for t in pod.long_tickers],
-                      'short': [{'ticker': t['ticker'], 'name': t['name'], 'thesis': t['thesis'],
-                                 'status': 'active', 'added': date.today().isoformat()}
-                                for t in pod.short_tickers],
-                  },
-                  'pairs': {
-                      'hints': pod.pair_hints if pod.pair_hints else [],
-                      'spread_params': {
-                          'lean_allowed': True,
-                          'max_lean_ratio': 0.55,
-                      },
-                  },
-              }
+          client = anthropic.Anthropic()
+          response = client.messages.create(
+              model="claude-sonnet-4-20250514", max_tokens=2000,
+              system=SYSTEM, messages=[{"role": "user", "content": prompt}])
 
-              filename = f'{next_num:02d}_{pod.pod_id}.yaml'
-              filepath = pod_dir / filename
-              with open(filepath, 'w') as f:
-                  yaml.dump(pod_yaml, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
-              print(f'Written to {filepath}')
+          text = response.content[0].text
+          start, end = text.find("{"), text.rfind("}") + 1
+          if start < 0:
+              print("No JSON in response")
+              sys.exit(0)
 
-          except Exception as e:
-              print(f'Pod generation failed: {e}')
-              import traceback
-              traceback.print_exc()
-              sys.exit(1)
-          "
+          data = json.loads(text[start:end])
+          print(f'Generated pod: {data["name"]} ({data["pod_id"]})')
+          print(f'  Long: {[t["ticker"] for t in data["long_tickers"]]}')
+          print(f'  Short: {[t["ticker"] for t in data["short_tickers"]]}')
+
+          # 3. Write YAML
+          pod_dir = Path('config/pods')
+          next_num = len(sorted(pod_dir.glob('*.yaml'))) + 1
+          today = date.today().isoformat()
+
+          pod_yaml = {
+              'pod_id': data['pod_id'], 'name': data['name'],
+              'status': 'ACTIVE', 'created_date': today, 'source': 'llm_generated',
+              'thesis': {
+                  'core': data['thesis_core'], 'long': data['thesis_long'],
+                  'short': data['thesis_short'], 'last_validated': today,
+                  'confidence': data.get('confidence', 'medium'),
+                  'invalidation_triggers': ['LLM-generated — review weekly'],
+              },
+              'watch_events': [{'event': 'Auto-generated catalyst', 'expected': 'ongoing',
+                                'status': 'active', 'impact': data['thesis_core'][:100], 'notes': 'Claude API'}],
+              'evolution_log': [{'date': today, 'note': f'Auto-generated from {len(headlines)} headlines'}],
+              'watchlist': {
+                  'long': [{'ticker': t['ticker'], 'name': t['name'], 'thesis': t['thesis'],
+                            'status': 'active', 'added': today} for t in data['long_tickers']],
+                  'short': [{'ticker': t['ticker'], 'name': t['name'], 'thesis': t['thesis'],
+                             'status': 'active', 'added': today} for t in data['short_tickers']],
+              },
+              'pairs': {
+                  'hints': data.get('pair_hints', []),
+                  'spread_params': {'lean_allowed': True, 'max_lean_ratio': 0.55},
+              },
+          }
+
+          filepath = pod_dir / f'{next_num:02d}_{data["pod_id"]}.yaml'
+          with open(filepath, 'w') as f:
+              yaml.dump(pod_yaml, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+          print(f'Written to {filepath}')
+          PYEOF
 
       - name: Commit new pod
         run: |
