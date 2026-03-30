@@ -42,7 +42,7 @@ class PolygonDataProvider:
         self,
         api_key: Optional[str] = None,
         db_path: str = "data/thematic_engine.db",
-        rate_limit_per_min: int = 5,
+        rate_limit_per_min: int = 100,  # starter tier
     ):
         self.api_key = api_key or os.environ.get("POLYGON_API_KEY", "")
         if not self.api_key:

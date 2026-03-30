@@ -29,9 +29,10 @@ Usage:
 
 import os
 import sys
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
+import numpy as np
 import yaml
 
 # Add src to path for imports
@@ -51,22 +52,61 @@ def load_config():
     return config_path, settings
 
 
+class DirectPolygonProvider:
+    """Fetches prices directly from Polygon REST API — no SQLite.
+    Uses in-memory cache so each ticker is only fetched once per session."""
+
+    BASE_URL = "https://api.polygon.io"
+
+    def __init__(self, api_key: str):
+        self.api_key = api_key
+        self._cache: dict[str, np.ndarray] = {}
+
+    def get_prices(self, ticker: str, days: int, **kw) -> np.ndarray:
+        cache_key = f"{ticker}:{days}"
+        if cache_key in self._cache:
+            return self._cache[cache_key]
+
+        import requests as req
+        from_date = (date.today() - timedelta(days=days + 10)).isoformat()
+        to_date = date.today().isoformat()
+
+        url = f"{self.BASE_URL}/v2/aggs/ticker/{ticker}/range/1/day/{from_date}/{to_date}"
+        params = {"apiKey": self.api_key, "adjusted": "true", "sort": "asc", "limit": 5000}
+        resp = req.get(url, params=params, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        if data.get("resultsCount", 0) == 0:
+            raise ValueError(f"No data for {ticker}")
+
+        closes = np.array([bar["c"] for bar in data["results"]], dtype=float)
+        result = closes[-days:] if len(closes) > days else closes
+        self._cache[cache_key] = result
+        return result
+
+
 def init_data_provider(settings: dict, config_path: Path, cache_only: bool = False):
     """Initialize data provider — Polygon if key available, else mock.
-    If cache_only=True, wraps provider to never hit the API (for scans)."""
+    Uses SQLite-backed provider locally, direct API on cloud (no db file)."""
     api_key = os.environ.get("POLYGON_API_KEY")
     db_path = config_path.parent / settings["data"]["db_path"]
 
     if api_key:
-        from data_provider import PolygonDataProvider
-        provider = PolygonDataProvider(api_key=api_key, db_path=str(db_path))
-        if cache_only:
-            class CacheOnlyWrapper:
-                def __init__(self, p): self._p = p
-                def get_prices(self, ticker, days, **kw):
-                    return self._p.get_prices(ticker, days, cache_only=True)
-            return CacheOnlyWrapper(provider)
-        return provider
+        # Use SQLite provider if db exists (local), direct API if not (cloud/CI)
+        if db_path.exists():
+            from data_provider import PolygonDataProvider
+            provider = PolygonDataProvider(api_key=api_key, db_path=str(db_path))
+            if cache_only:
+                class CacheOnlyWrapper:
+                    def __init__(self, p): self._p = p
+                    def get_prices(self, ticker, days, **kw):
+                        return self._p.get_prices(ticker, days, cache_only=True)
+                return CacheOnlyWrapper(provider)
+            return provider
+        else:
+            print("  No local database — fetching directly from Polygon API")
+            return DirectPolygonProvider(api_key)
     else:
         print("  No POLYGON_API_KEY set. Using mock data provider.")
         from pairs_engine import MockDataProvider
