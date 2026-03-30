@@ -410,11 +410,19 @@ if __name__ == "__main__":
                 all_tickers.add(t["ticker"])
 
     all_tickers = sorted(all_tickers)
-    print(f"Fetching {len(all_tickers)} tickers (2024-11-01 to 2025-12-31)...")
+
+    # Determine date range from command line args or defaults
+    start = sys.argv[1] if len(sys.argv) > 1 else "2025-01-02"
+    end = sys.argv[2] if len(sys.argv) > 2 else "2025-12-31"
+
+    # Need 60 days before start for lookback
+    from_fetch = (datetime.strptime(start, "%Y-%m-%d") - timedelta(days=90)).strftime("%Y-%m-%d")
+
+    print(f"Fetching {len(all_tickers)} tickers ({from_fetch} to {end})...")
     fetched = 0
     for ticker in all_tickers:
         try:
-            h = data.fetch_full_history(ticker, "2024-11-01", "2025-12-31")
+            h = data.fetch_full_history(ticker, from_fetch, end)
             if h:
                 fetched += 1
                 if fetched % 20 == 0:
@@ -425,6 +433,6 @@ if __name__ == "__main__":
     print()
 
     bt = BacktesterV2(settings, data)
-    bt.run("2025-01-02", "2025-12-31")
+    bt.run(start, end)
     print()
     bt.report()
