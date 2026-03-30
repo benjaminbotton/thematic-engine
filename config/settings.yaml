@@ -1,0 +1,164 @@
+capital_base: 100000
+
+# =============================================================================
+# HARD RULES — these are inviolable. The system enforces them structurally.
+# No signal, no thesis, no conviction overrides these. Ever.
+# =============================================================================
+
+hard_rules:
+  # RULE 1: Never risk more than 1-2% of capital on a single trade.
+  # At $100K: max $1,000-$2,000 loss per pair before forced exit.
+  # This is calculated as: max_risk_per_trade = capital_base * max_risk_pct
+  # Position size is DERIVED from this, not the other way around.
+  max_risk_per_trade_pct: 0.015     # 1.5% of capital = $1,500 max loss per pair
+  absolute_max_loss_per_pair: 2000  # hard dollar cap regardless of capital growth
+
+  # RULE 2: Never use leverage where a 5% correlated move is fatal.
+  # At $100K with $120K gross: a 5% move = $6,000 = 6% of capital. Survivable.
+  # Keep gross <= 120% of capital to limit 5%-move damage to 6%.
+  max_gross_to_capital_ratio: 1.20  # $120K max gross on $100K capital
+  max_correlated_5pct_loss_pct: 0.06  # 5% move on gross can't lose more than 6% of capital
+
+  # RULE 3: Always assume a strategy can stop working.
+  # Cointegration retested weekly. Pairs auto-retired if stats degrade.
+  # No pair survives more than 30 days without re-qualifying.
+  max_pair_age_without_retest_days: 7
+  auto_retire_on_coint_failure: true
+  max_consecutive_pair_losses: 3    # 3 stopped-out pairs in a row = pause pod for 48h
+
+  # RULE 4: Always assume a market can gap overnight.
+  # Stops are aspirational, not guaranteed. Size for the gap, not the stop.
+  # Assume overnight gap = 2x your stop distance.
+  gap_multiplier: 2.0              # assume actual loss is 2x your stop-loss distance
+  max_overnight_gross_exposure: 80000  # $80K overnight = 80% of capital
+  reduce_to_overnight_before: "15:45"  # PT — start reducing 15 min before close
+
+  # RULE 5: "Once in 10 years" happens every few years.
+  # Size for the scenario where ALL correlated positions move against you
+  # simultaneously, gaps occur on both legs in the wrong direction,
+  # and liquidity disappears.
+  tail_risk_multiplier: 2.0        # all risk calculations assume 2x worse than modeled
+  circuit_breaker_drawdown: 0.10   # 10% drawdown from peak = flatten EVERYTHING
+  circuit_breaker_cooloff_hours: 48
+  weekly_loss_limit: 0.05          # -5% in a week = no new trades until next Monday
+  monthly_loss_limit: 0.08         # -8% in a month = full stop, review everything
+
+# =============================================================================
+# POSITION SIZING — derived from hard rules, not independent
+# =============================================================================
+
+positions:
+  max_per_pod: 2          # 1 long + 1 short
+  total_max: 10           # 5 pods x 2
+
+  # Size is calculated from Rule 1:
+  # max_loss_per_pair = $1,500 (1.5% of $100K)
+  # stop_distance = 8% (spread stop)
+  # gap_adjusted_stop = 16% (8% * 2x gap multiplier)
+  # max_pair_notional = $1,500 / 0.16 = $9,375
+  # per-leg = $9,375 / 2 = $4,687
+  default_size: 8000      # conservative default per leg
+  max_size: 10000         # hard cap per leg
+
+exposure:
+  max_gross: 120000       # 120% of capital (Rule 2)
+  max_net: 10000          # +/- 10% of capital (tight neutrality)
+  margin_utilization_cap: 0.55  # conservative margin usage
+
+risk:
+  stop_loss_pct: 0.08           # -8% from entry (per-leg)
+  trailing_stop_activation: 0.05
+  max_holding_days: 20
+  circuit_breaker_drawdown: 0.10 # Rule 5
+  daily_loss_limit: 0.025
+  max_same_side_correlation: 0.7
+
+signals:
+  cadence_times:       # PT — scans every 30 min during market hours
+    - "06:30"          # pre-market
+    - "07:00"
+    - "07:30"
+    - "08:00"
+    - "08:30"
+    - "09:00"
+    - "09:30"
+    - "10:00"
+    - "10:30"
+    - "11:00"
+    - "11:30"
+    - "12:00"
+    - "12:30"
+    - "13:00"          # market close ET
+  weights:
+    relative_strength: 0.40
+    mean_reversion: 0.35
+    trend_confirmation: 0.25
+  threshold_std: 1.5  # signal fires above this
+
+universe:
+  min_market_cap: 500_000_000   # $500M
+  max_market_cap: 10_000_000_000 # $10B
+  min_avg_volume_ratio: 1.5      # 5d avg > 1.5x 20d avg
+
+data:
+  provider: polygon
+  database: sqlite
+  db_path: data/thematic_engine.db
+
+brokerage:
+  provider: alpaca
+  environment: paper  # paper | live
+
+# --- PAIRS / SPREAD TRADING LAYER ---
+
+pairs:
+  # Pair discovery
+  discovery:
+    cointegration_method: engle_granger  # engle_granger | johansen
+    lookback_days: 60          # window for cointegration test
+    min_correlation: 0.30      # pre-filter before running cointegration (lenient — coint is the real test)
+    cointegration_pvalue: 0.05 # must pass at this significance level
+    retest_interval_days: 7    # re-run cointegration weekly
+    max_pairs_per_pod: 4       # up to 4 per pod for more signal flow
+    max_total_pairs: 15        # portfolio-wide cap (3 per pod avg)
+
+  # Spread signal thresholds
+  spread:
+    entry_zscore: 2.0          # enter when spread deviates 2σ from mean
+    exit_zscore: 0.5           # exit when spread reverts within 0.5σ
+    stop_zscore: 3.5           # stop loss — spread diverged too far, relationship may be broken
+    zscore_lookback: 20        # rolling window for z-score mean/std
+    min_half_life: 2           # spread must mean-revert faster than this (days)
+    max_half_life: 15          # spread that takes >15 days is too slow
+    regime_lookback: 40        # window for Hurst exponent calculation
+
+  # Position sizing (per-leg) — constrained by hard rules
+  sizing:
+    default_leg_size: 8000     # each leg of the pair ($16K total notional per pair)
+    max_leg_size: 10000        # hard cap per leg (constrained by Rule 1 + Rule 4)
+    lean_enabled: true         # allow thesis-driven directional lean
+    max_lean_ratio: 0.55       # 55/45 max
+    conviction_lean_map:
+      high: 0.55
+      medium: 0.52
+      low: 0.50
+      stale: 0.50
+
+  # Pair-specific risk — aligned with hard rules
+  risk:
+    max_loss_per_pair_pct_of_capital: 0.015  # Rule 1: 1.5% of capital per pair
+    max_concurrent_pairs: 5
+    max_gross_exposure: 120000    # Rule 2: 120% of capital
+    max_net_exposure: 10000       # tight neutrality
+    max_pair_correlation: 0.60
+    max_same_sector_pairs: 2
+    max_leg_delay_seconds: 30
+
+  # Volatility regime detection
+  regime:
+    hurst_threshold: 0.45
+    hurst_lookback: 40
+    vol_scaling: true
+    vol_lookback: 20
+    high_vol_size_multiplier: 0.7
+    low_vol_size_multiplier: 1.0

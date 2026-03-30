@@ -1,0 +1,204 @@
+pod_id: k_shaped_consumer
+name: "The K-Shaped Consumer"
+status: ACTIVE
+created_date: "2026-03-29"
+
+thesis:
+  core: >
+    The consumer economy is splitting. Affluent consumers benefit from asset
+    appreciation and OBBBA tax windfalls. Lower-income consumers are crushed
+    by cumulative inflation and tariff-driven goods prices. This pod trades
+    the widening spread between luxury and discount.
+  long: >
+    Luxury/premium consumer discretionary, experiential spending, wealth
+    management platforms, premium home improvement. Affluent customer base
+    with rising disposable income.
+  short: >
+    Dollar stores, subprime consumer finance (BNPL, subprime auto), low-end
+    dining. Core customer under maximum financial stress with rising
+    delinquencies.
+  last_validated: "2026-03-29"
+  confidence: high
+
+  invalidation_triggers:
+    - "Consumer confidence rebounds broadly across income quintiles"
+    - "Inflation drops sharply, relieving low-income pressure"
+    - "Stock market correction hits affluent spending"
+    - "OBBBA provisions get clawed back or modified"
+    - "Subprime delinquency rates stabilize or improve"
+
+watch_events:
+  - event: "Tax refund season — OBBBA impact"
+    expected: "2026-04 through 2026-05"
+    status: upcoming
+    impact: "Super-sized refunds for high earners = spending surge in luxury"
+    notes: "Track IRS refund data releases, luxury retailer same-store sales"
+
+  - event: "Monthly retail sales data"
+    expected: "monthly"
+    status: active
+    impact: "Shows mix shift between premium and discount channels"
+    notes: ""
+
+  - event: "Consumer confidence reports"
+    expected: "monthly"
+    status: active
+    impact: "Divergence between high/low income confidence = thesis confirmation"
+    notes: "University of Michigan, Conference Board"
+
+  - event: "Consumer discretionary earnings"
+    expected: "quarterly"
+    status: active
+    impact: "Reveals actual traffic/spend patterns by income segment"
+    notes: "Compare luxury vs. dollar store same-store comps"
+
+  - event: "Subprime delinquency data"
+    expected: "monthly/quarterly"
+    status: active
+    impact: "Rising delinquencies confirm short thesis on BNPL/subprime auto"
+    notes: "Fed consumer credit data, ABS performance reports"
+
+evolution_log:
+  - date: "2026-03-29"
+    note: "Pod created. CPI +24% since Jan 2021. K-shape widening. OBBBA refunds hitting in spring."
+
+watchlist:
+  long:
+    - ticker: RH
+      name: "RH (Restoration Hardware)"
+      thesis: "Luxury home furnishings, affluent customer base"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: BIRK
+      name: "Birkenstock"
+      thesis: "Premium footwear, pricing power with affluent consumers"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: TPR
+      name: "Tapestry"
+      thesis: "Coach/Kate Spade, aspirational luxury, trade-up beneficiary"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CPRI
+      name: "Capri Holdings"
+      thesis: "Versace/Michael Kors, luxury segment strength"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PTON
+      name: "Peloton"
+      thesis: "Premium fitness, affluent subscriber base stabilizing"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PLNT
+      name: "Planet Fitness"
+      thesis: "Value fitness but affluent franchise model"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: LPLA
+      name: "LPL Financial"
+      thesis: "Wealth management platform, AUM growth from asset appreciation"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: EVR
+      name: "Evercore"
+      thesis: "Wealth management + advisory, affluent client base"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: POOL
+      name: "Pool Corporation"
+      thesis: "Swimming pools, high-end home improvement"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: TREX
+      name: "Trex Company"
+      thesis: "Composite decking, premium home renovation"
+      status: active
+      added: "2026-03-29"
+
+  short:
+    - ticker: DG
+      name: "Dollar General"
+      thesis: "Core customer under maximum financial stress"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: DLTR
+      name: "Dollar Tree"
+      thesis: "Low-income retail, traffic declining"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CATO
+      name: "Cato Corporation"
+      thesis: "Value apparel, stressed low-income customer base, traffic declining"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CACC
+      name: "Credit Acceptance Corp"
+      thesis: "Subprime auto lending, rising delinquencies"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ALLY
+      name: "Ally Financial"
+      thesis: "Auto lending, subprime exposure, credit deterioration"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: AFRM
+      name: "Affirm Holdings"
+      thesis: "BNPL, subprime credit exposure, loss rates rising"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: QSR
+      name: "Restaurant Brands International"
+      thesis: "Burger King/Popeyes, low-income traffic pressure"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: WEN
+      name: "Wendy's"
+      thesis: "QSR, low-income consumer pullback"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: JACK
+      name: "Jack in the Box"
+      thesis: "QSR, value-focused customer base under stress"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: DENN
+      name: "Denny's"
+      thesis: "Low-end family dining, stressed core customer, traffic deteriorating"
+      status: active
+      added: "2026-03-29"
+
+# --- PAIRS CONFIG ---
+
+pairs:
+  hints:
+    - long: RH
+      short: DG
+      rationale: "Luxury furnishings (affluent) vs. dollar store (stressed consumer) — purest K spread"
+    - long: BIRK
+      short: DLTR
+      rationale: "Premium footwear vs. deep discount retail"
+    - long: LPLA
+      short: AFRM
+      rationale: "Wealth management (asset appreciation) vs. BNPL (subprime credit)"
+
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55

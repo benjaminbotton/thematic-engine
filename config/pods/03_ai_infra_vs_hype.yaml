@@ -1,0 +1,197 @@
+pod_id: ai_infra_vs_hype
+name: "AI Infrastructure vs. AI Hype"
+status: ACTIVE
+created_date: "2026-03-29"
+
+thesis:
+  core: >
+    The AI trade is bifurcating. Physical infrastructure (power, cooling, data
+    centers) has real revenue and multi-year order books. Application-layer AI
+    is mostly narrative with no profitability. Each earnings cycle widens or
+    narrows this gap — the pod trades the spread.
+  long: >
+    Picks-and-shovels: power infrastructure, cooling, data center REITs,
+    electrical contractors. Revenue is real and growing regardless of which
+    AI models win.
+  short: >
+    AI-washing: application-layer companies burning cash, companies that pivoted
+    to AI for valuation but have no AI revenue, and extreme-multiple names where
+    >50% of valuation is narrative.
+  last_validated: "2026-03-29"
+  confidence: high
+
+  invalidation_triggers:
+    - "Hyperscaler capex slows materially (multiple quarters of declining spend)"
+    - "Application-layer AI companies start showing real recurring revenue"
+    - "Power/cooling infrastructure hits supply glut or order cancellations"
+    - "Broad AI sentiment crash takes down infra names alongside hype names"
+
+watch_events:
+  - event: "Hyperscaler capex announcements"
+    expected: "ongoing"
+    status: active
+    impact: "Confirms or denies the infrastructure demand thesis"
+    notes: "Watch MSFT, GOOGL, AMZN, META quarterly capex guidance"
+
+  - event: "Earnings season — infra vs. app divergence"
+    expected: "quarterly"
+    status: active
+    impact: "Each cycle either confirms the spread or signals convergence"
+    notes: "Key: do AI app companies start showing revenue, or keep burning?"
+
+  - event: "AI profitability inflection"
+    expected: "2026-H2"
+    status: upcoming
+    impact: "If early AI investments show returns, short thesis weakens. If not, accelerates."
+    notes: "This is the big one. Monitor closely mid-year."
+
+  - event: "Power grid bottlenecks / permitting"
+    expected: "ongoing"
+    status: active
+    impact: "Grid constraints = pricing power for infra names, delays for data center buildout"
+    notes: ""
+
+evolution_log:
+  - date: "2026-03-29"
+    note: "Pod created. AI capex >$500B projected. Infra revenue real, app-layer mostly narrative."
+
+watchlist:
+  long:
+    - ticker: POWL
+      name: "Powell Industries"
+      thesis: "Switchgear/power solutions for data centers, record backlog"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: GEV
+      name: "GE Vernova"
+      thesis: "Grid equipment, gas turbines for data center power"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ETN
+      name: "Eaton Corporation"
+      thesis: "Electrical components, data center power distribution"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: HUBB
+      name: "Hubbell"
+      thesis: "Electrical products, grid modernization beneficiary"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: VRT
+      name: "Vertiv Holdings"
+      thesis: "Data center cooling/power, direct AI capex beneficiary"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: MOD
+      name: "Modine Manufacturing"
+      thesis: "Thermal management, data center cooling growth"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: EME
+      name: "EMCOR Group"
+      thesis: "Electrical/mechanical construction, data center buildout"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: MTZ
+      name: "MasTec"
+      thesis: "Infrastructure construction, power/data center projects"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: DLR
+      name: "Digital Realty"
+      thesis: "Data center REIT, insatiable AI-driven demand"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: IRM
+      name: "Iron Mountain"
+      thesis: "Data center expansion play, growing colocation revenue"
+      status: active
+      added: "2026-03-29"
+
+  short:
+    - ticker: AI
+      name: "C3.ai"
+      thesis: "Enterprise AI, persistent negative FCF, AI-washing poster child"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: BBAI
+      name: "BigBear.ai"
+      thesis: "AI analytics, minimal revenue, narrative-driven valuation"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SOUN
+      name: "SoundHound AI"
+      thesis: "Voice AI, tiny revenue base vs. valuation"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PRCT
+      name: "PROCEPT BioRobotics"
+      thesis: "AI-adjacent surgical robotics, priced for perfection"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: UPST
+      name: "Upstart Holdings"
+      thesis: "AI lending, credit cycle vulnerability, valuation stretched"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PLTR
+      name: "Palantir"
+      thesis: "Extreme valuation, >50% attributable to AI narrative"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PATH
+      name: "UiPath"
+      thesis: "RPA-to-AI pivot, growth decelerating, valuation premium"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: DOCN
+      name: "DigitalOcean"
+      thesis: "Cloud, AI narrative premium on small-cap infra"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: INTA
+      name: "Intapp"
+      thesis: "Professional services SaaS, AI premium without AI revenue"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: RVTY
+      name: "Revvity"
+      thesis: "Life sciences, AI-adjacent narrative without substance"
+      status: active
+      added: "2026-03-29"
+
+# --- PAIRS CONFIG ---
+
+pairs:
+  hints:
+    - long: VRT
+      short: AI
+      rationale: "Data center cooling (real revenue) vs. C3.ai (AI-washing, negative FCF)"
+    - long: POWL
+      short: SOUN
+      rationale: "Switchgear/power (record backlog) vs. SoundHound (tiny revenue vs. valuation)"
+    - long: EME
+      short: BBAI
+      rationale: "Electrical construction (real buildout) vs. BigBear (narrative-only)"
+
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55

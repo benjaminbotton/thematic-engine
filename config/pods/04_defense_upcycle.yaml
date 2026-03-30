@@ -1,0 +1,203 @@
+pod_id: defense_upcycle
+name: "Defense Spending Secular Upcycle"
+status: ACTIVE
+created_date: "2026-03-29"
+
+thesis:
+  core: >
+    Defense is in a multi-year secular upcycle driven by geopolitical
+    instability. The edge isn't in large primes (well-covered) but in their
+    supply chain — sub-tier suppliers, munitions specialists, military IT.
+    This pod trades the backlog visibility vs. backlog cliff spread.
+  long: >
+    Mid-cap defense sub-tier suppliers with growing backlogs: components,
+    subsystems, munitions, drone/autonomous systems, military cyber. Order
+    books stretching years out.
+  short: >
+    Defense companies with disclosed backlog cliffs, expiring contracts
+    without replacement, or commercial aerospace exposure that gets
+    crowded out by defense prioritization.
+  last_validated: "2026-03-29"
+  confidence: high
+
+  invalidation_triggers:
+    - "Major geopolitical de-escalation (comprehensive peace deals)"
+    - "US defense budget gets cut meaningfully"
+    - "NATO defense commitment rollback"
+    - "Defense sub-tier suppliers hit capacity constraints that compress margins"
+
+watch_events:
+  - event: "US defense budget / appropriations"
+    expected: "ongoing"
+    status: active
+    impact: "Budget size and allocation drives sub-tier order flow"
+    notes: "Watch for continuing resolutions vs. full appropriations"
+
+  - event: "NATO summits and European defense procurement"
+    expected: "ongoing"
+    status: active
+    impact: "European defense spending = incremental demand for US suppliers"
+    notes: ""
+
+  - event: "Geopolitical flashpoints"
+    expected: "ongoing"
+    status: active
+    impact: "Iran, China-Taiwan, Ukraine — escalation = urgency = spending"
+    notes: "Binary events. Monitor daily."
+
+  - event: "Defense earnings / backlog disclosures"
+    expected: "quarterly"
+    status: active
+    impact: "Confirms growing vs. declining backlogs. Key for long/short selection."
+    notes: "Pay attention to book-to-bill ratios in earnings calls"
+
+  - event: "Contract award announcements"
+    expected: "ongoing"
+    status: active
+    impact: "Recompete wins/losses directly affect short thesis names"
+    notes: ""
+
+evolution_log:
+  - date: "2026-03-29"
+    note: "Pod created. Defense + gold were 2025 standout performers. Secular trend intact."
+
+watchlist:
+  long:
+    - ticker: KTOS
+      name: "Kratos Defense"
+      thesis: "Drone/autonomous systems, tactical UAV programs"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: BWXT
+      name: "BWX Technologies"
+      thesis: "Nuclear propulsion (submarines, AUKUS), sole-source government contracts"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: MRCY
+      name: "Mercury Systems"
+      thesis: "Defense electronics, mission computing subsystems"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: AVAV
+      name: "AeroVironment"
+      thesis: "Small UAS, loitering munitions, Ukraine demand driver"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: TDG
+      name: "TransDigm"
+      thesis: "Proprietary aerospace components, sole-source parts"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: AXON
+      name: "Axon Enterprise"
+      thesis: "Law enforcement/military tech, expanding defense contracts"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SWBI
+      name: "Smith & Wesson"
+      thesis: "Small arms, military/LE contracts"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PANW
+      name: "Palo Alto Networks"
+      thesis: "Cyber defense, expanding government contract base"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: LDOS
+      name: "Leidos Holdings"
+      thesis: "Defense IT services, growing backlog"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: RCAT
+      name: "Red Cat Holdings"
+      thesis: "Military drone manufacturer, DOD short-range recon contract"
+      status: active
+      added: "2026-03-29"
+
+  short:
+    - ticker: PSN
+      name: "Parsons Corporation"
+      thesis: "Engineering services, select contract completions"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SAIC
+      name: "Science Applications Intl"
+      thesis: "IT services, contract recompete cycle, margin pressure"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: TXT
+      name: "Textron"
+      thesis: "Diversified aerospace, commercial segments under pressure"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ATRO
+      name: "Astronics Corporation"
+      thesis: "Aerospace lighting/structures, heavy commercial aero dependency risk"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: HXL
+      name: "Hexcel Corporation"
+      thesis: "Composites, commercial aero slowdown"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: HWM
+      name: "Howmet Aerospace"
+      thesis: "Fasteners/structures, commercial aero cycle risk"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ATI
+      name: "ATI Inc"
+      thesis: "Specialty metals/structures, commercial aerospace exposure at risk from defense crowding-out"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ESAB
+      name: "ESAB Corporation"
+      thesis: "Welding/cutting, industrial capex crowding-out"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CW
+      name: "Curtiss-Wright"
+      thesis: "Defense/industrial, select programs at backlog cliff"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: VSAT
+      name: "Viasat"
+      thesis: "Satellite comms, integration risk, commercial drag"
+      status: active
+      added: "2026-03-29"
+
+# --- PAIRS CONFIG ---
+
+pairs:
+  hints:
+    - long: KTOS
+      short: SAIC
+      rationale: "Drone/UAV growth vs. IT services recompete cycle"
+    - long: AVAV
+      short: ATRO
+      rationale: "Loitering munitions demand vs. commercial aero structures dependency"
+    - long: LDOS
+      short: VSAT
+      rationale: "Defense IT growing backlog vs. satellite comms integration risk"
+
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55

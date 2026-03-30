@@ -1,0 +1,220 @@
+pod_id: fed_chair_transition
+name: "The Fed Chair Transition"
+status: ACTIVE
+created_date: "2026-03-29"
+
+thesis:
+  core: >
+    The Fed leadership transition is a binary event with massive rate
+    implications. Warsh confirmation = dovish repricing. Prolonged uncertainty
+    = rates stay elevated. Either outcome creates a spread between regional
+    banks (NIM expansion either way) and mortgage originators (need rate cuts
+    for volume). Same rate sensitivity, opposite positioning.
+  long: >
+    Regional banks with asset-sensitive balance sheets. NIM expands whether
+    cuts come (steepening curve) or don't (higher short rates). Deposit
+    franchises provide funding advantage. Win either outcome.
+  short: >
+    Mortgage originators and rate-dependent fintechs already priced for a
+    rate cut boom. Volume-dependent models need a refi wave that may not
+    come. If cuts delayed or uncertainty persists, valuation compression.
+  last_validated: "2026-03-29"
+  confidence: high
+
+  invalidation_triggers:
+    - "Warsh withdraws nomination or alternative nominee named"
+    - "Fed signals rates on hold regardless of chair outcome"
+    - "Inflation re-accelerates, making rate cuts impossible near-term"
+    - "Regional bank NIM compresses despite rate environment (deposit competition)"
+    - "Mortgage volumes surge without rate cuts (invalidates short thesis)"
+
+watch_events:
+  - event: "Powell term expiry"
+    expected: "2026-05-15"
+    status: upcoming
+    impact: "Hard deadline — either Warsh is confirmed or Powell stays as pro tem"
+    notes: ""
+
+  - event: "Senate Banking Committee confirmation process"
+    expected: "2026-03 through 2026-05"
+    status: active
+    impact: "Tillis blocking = delay = uncertainty premium. Watch for deal-making."
+    notes: "Monitor committee votes, DOJ probe developments"
+
+  - event: "FOMC meeting"
+    expected: "2026-04-28"
+    status: upcoming
+    impact: "Statement language on leadership transition, forward guidance"
+    notes: ""
+
+  - event: "FOMC meeting"
+    expected: "2026-06-16"
+    status: upcoming
+    impact: "First meeting potentially under new chair or pro tem Powell"
+    notes: ""
+
+  - event: "DOJ Powell probe developments"
+    expected: "ongoing"
+    status: active
+    impact: "Federal judge blocked subpoenas. Further rulings affect Tillis leverage."
+    notes: ""
+
+  - event: "Bank earnings / NIM disclosures"
+    expected: "quarterly"
+    status: active
+    impact: "Confirms NIM expansion thesis for longs, volume weakness for shorts"
+    notes: "Compare regional bank NIM trends vs. mortgage originator volume"
+
+evolution_log:
+  - date: "2026-03-29"
+    note: "Pod created. Warsh nomination pending. Tillis blocking. Binary setup."
+  - date: "2026-03-29"
+    note: "Restructured: dropped homebuilders/SaaS, focused on banks vs. mortgage originators for better cointegration."
+
+watchlist:
+  long:
+    - ticker: PNFP
+      name: "Pinnacle Financial Partners"
+      thesis: "Regional bank, NIM expansion on rate cuts or higher-for-longer"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: FNB
+      name: "F.N.B. Corp"
+      thesis: "Regional bank, asset-sensitive balance sheet, deposit franchise"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: UMBF
+      name: "UMB Financial"
+      thesis: "Regional bank, benefits from steepening yield curve"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: GBCI
+      name: "Glacier Bancorp"
+      thesis: "Community bank, rate-sensitive mortgage book, low-cost deposits"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ONB
+      name: "Old National Bancorp"
+      thesis: "Regional bank, asset-sensitive, recent acquisition scale"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SFBS
+      name: "ServisFirst Bancshares"
+      thesis: "High-growth regional bank, strong NIM, asset-sensitive"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: WTFC
+      name: "Wintrust Financial"
+      thesis: "Chicago regional bank, asset-sensitive, deposit-funded"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CADE
+      name: "Cadence Bank"
+      thesis: "Southeast regional bank, NIM expansion from rate environment"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: HWC
+      name: "Hancock Whitney"
+      thesis: "Gulf South regional bank, asset-sensitive balance sheet"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: BOKF
+      name: "BOK Financial"
+      thesis: "Energy/Midwest regional bank, asset-sensitive, fee income diversification"
+      status: active
+      added: "2026-03-29"
+
+  short:
+    - ticker: RKT
+      name: "Rocket Companies"
+      thesis: "Mortgage originator, priced for rate cut refi boom"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: UWMC
+      name: "UWM Holdings"
+      thesis: "Wholesale mortgage, volume-dependent, overextended on cut expectations"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SOFI
+      name: "SoFi Technologies"
+      thesis: "Fintech/lending, rate-dependent valuation and loan growth"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: LC
+      name: "LendingClub"
+      thesis: "Consumer lending platform, credit deterioration if rates stay high"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: OPEN
+      name: "Opendoor Technologies"
+      thesis: "iBuying, already priced in rate cuts, vulnerable to delay"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: TREE
+      name: "LendingTree"
+      thesis: "Lending marketplace, volume dependent on rate-driven refi activity"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: PFSI
+      name: "PennyMac Financial Services"
+      thesis: "Mortgage originator/servicer, origination revenue needs rate cuts"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: LMND
+      name: "Lemonade"
+      thesis: "Insurtech, rate-dependent growth model, needs low rates for valuation"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: NLY
+      name: "Annaly Capital Management"
+      thesis: "Agency mortgage REIT, spread compression if rates stay elevated"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: AGNC
+      name: "AGNC Investment Corp"
+      thesis: "Agency mortgage REIT, spread compression if rates stay elevated"
+      status: active
+      added: "2026-03-29"
+
+# --- PAIRS CONFIG ---
+
+pairs:
+  hints:
+    - long: PNFP
+      short: RKT
+      rationale: "Regional bank NIM expansion vs. mortgage originator volume dependency — same rate, opposite sides"
+    - long: FNB
+      short: SOFI
+      rationale: "Traditional bank deposit franchise vs. fintech lending — same rate exposure, opposite models"
+    - long: UMBF
+      short: UWMC
+      rationale: "Regional bank vs. wholesale mortgage originator"
+    - long: GBCI
+      short: LC
+      rationale: "Community bank vs. consumer lending platform"
+    - long: ONB
+      short: OPEN
+      rationale: "Regional bank vs. iBuyer — both rate-sensitive, opposite positioning"
+
+  spread_params:
+    min_correlation: 0.35    # financials should correlate reasonably well
+    lean_allowed: true
+    max_lean_ratio: 0.55

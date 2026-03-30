@@ -1,0 +1,221 @@
+pod_id: tariff_scramble
+name: "The Tariff Regime Scramble"
+status: ACTIVE
+created_date: "2026-03-29"
+
+# --- THESIS (living document — update as events unfold) ---
+
+thesis:
+  core: >
+    Post-IEEPA tariff unwinding is creating asymmetric winners and losers.
+    Importers get refunds + margin relief. Domestic producers lose protection.
+    The regime is still in flux — new Section 301 actions could re-scramble.
+  long: >
+    Import-heavy companies owed IEEPA tariff refunds see one-time earnings
+    windfalls. Input cost declines as protection erodes expand margins.
+  short: >
+    Domestic producers who benefited from tariff protection face renewed import
+    competition. Margin compression as cheaper imports return.
+  last_validated: "2026-03-29"
+  confidence: high  # high / medium / low / stale
+
+  # What would KILL this thesis? If any of these become true, reassess.
+  invalidation_triggers:
+    - "New broad-based tariff regime replaces Section 122 before expiry"
+    - "CBP announces indefinite delay on refund processing"
+    - "Bipartisan legislation reinstates IEEPA-level protection"
+    - "Domestic steel/aluminum prices collapse independently of imports"
+
+# --- WATCH EVENTS (not rigid dates — living awareness markers) ---
+
+watch_events:
+  - event: "Section 122 tariff expiry"
+    expected: "2026-07-24"
+    status: upcoming        # upcoming / active / resolved / invalidated
+    impact: "Protection cliff for domestic producers. Key short catalyst."
+    notes: ""
+
+  - event: "Section 301 investigation findings"
+    expected: "2026-Q2-Q3"
+    status: active
+    impact: "Could re-impose targeted tariffs on specific goods/countries"
+    notes: "Monitor USTR announcements. Could flip some longs to shorts."
+
+  - event: "CBP refund processing ramp"
+    expected: "rolling"
+    status: active
+    impact: "~$650M/month accruing systemwide. Individual company windfalls."
+    notes: "Track which companies disclose refund amounts in earnings/10-Qs."
+
+  - event: "Earnings season — refund disclosures"
+    expected: "quarterly"
+    status: active
+    impact: "Companies disclosing actual refund $ = catalyst confirmation"
+    notes: ""
+
+# --- EVOLUTION LOG (how has this thesis changed over time?) ---
+
+evolution_log:
+  - date: "2026-03-29"
+    note: "Pod created. SCOTUS IEEPA ruling is 5 weeks old. Refund lawsuits piling up. Section 122 replacement in place but expiring."
+
+# --- WATCHLIST ---
+
+watchlist:
+  long:
+    - ticker: FIVE
+      name: "Five Below"
+      thesis: "Heavy China import exposure, likely large refund claimant"
+      status: active    # active / paused / removed
+      added: "2026-03-29"
+
+    - ticker: COLM
+      name: "Columbia Sportswear"
+      thesis: "Outdoor apparel, heavy Asia/China sourcing — import refund claimant"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CROX
+      name: "Crocs Inc"
+      thesis: "Footwear importer, Vietnam/China manufacturing base"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CAL
+      name: "Caleres"
+      thesis: "Footwear brands/retail (Famous Footwear), heavy China/Vietnam sourcing"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: FOXF
+      name: "Fox Factory"
+      thesis: "Specialty vehicle parts, Taiwan/China component sourcing"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SONO
+      name: "Sonos"
+      thesis: "Consumer electronics, China manufacturing"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: DORM
+      name: "Dorman Products"
+      thesis: "Auto parts distributor, high import content"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: SN
+      name: "SharkNinja"
+      thesis: "Consumer appliances, heavy China manufacturing"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CASY
+      name: "Casey's General Stores"
+      thesis: "Convenience retail, imported goods margin expansion"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: WOOF
+      name: "Petco"
+      thesis: "Pet products retailer, high import content from China"
+      status: active
+      added: "2026-03-29"
+
+  short:
+    - ticker: CLF
+      name: "Cleveland-Cliffs"
+      thesis: "Domestic steel, loses tariff protection pricing power"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: NUE
+      name: "Nucor Corporation"
+      thesis: "Domestic steel dominant — elevated margins at risk as import protection unwinds"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CMC
+      name: "Commercial Metals"
+      thesis: "Domestic steel/rebar, tariff protection unwinding"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: CENX
+      name: "Century Aluminum"
+      thesis: "Domestic aluminum, directly benefited from IEEPA tariffs"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: KALU
+      name: "Kaiser Aluminum"
+      thesis: "Specialty aluminum, tariff-protected niche"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ZEUS
+      name: "Olympic Steel"
+      thesis: "Steel service center, spread compression as imports return"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: RS
+      name: "Reliance Steel & Aluminum"
+      thesis: "Largest metals service center — tariff-protected spreads at risk from import return"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: MTRN
+      name: "Materion"
+      thesis: "Advanced materials, some tariff-protected product lines"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: ATKR
+      name: "Atkore"
+      thesis: "Electrical conduit/steel, benefited from import protection"
+      status: active
+      added: "2026-03-29"
+
+    - ticker: STLD
+      name: "Steel Dynamics"
+      thesis: "Domestic steel producer, elevated margins at risk"
+      status: active
+      added: "2026-03-29"
+
+# --- PAIRS CONFIG ---
+
+pairs:
+  hints:
+    # Footwear importer vs. domestic metals — clearest tariff spread
+    - long: CROX
+      short: CLF
+      rationale: "Footwear importer (refund + margin relief) vs. steel (protection loss)"
+    - long: CAL
+      short: STLD
+      rationale: "Footwear importer (China/Vietnam supply chain) vs. domestic steel — both directly exposed to tariff regime"
+    - long: FIVE
+      short: CENX
+      rationale: "China-heavy retailer (refund claimant) vs. aluminum (tariff beneficiary)"
+    - long: SN
+      short: ATKR
+      rationale: "China appliance mfg vs. steel conduit — same tariff, opposite sides"
+    - long: DORM
+      short: CMC
+      rationale: "Auto parts importer vs. domestic steel/rebar"
+
+  exclude:
+    - long: CASY
+      short: RS
+      reason: "No causal link — convenience stores vs. metals distribution"
+    - long: WOOF
+      short: MTRN
+      reason: "Pet retail vs. advanced materials — no shared tariff exposure"
+
+  spread_params:
+    min_correlation: 0.40       # looser — these are cross-sector pairs driven by shared catalyst
+    cointegration_pvalue: 0.05
+    lookback_days: 60
+    lean_allowed: true
+    max_lean_ratio: 0.55
