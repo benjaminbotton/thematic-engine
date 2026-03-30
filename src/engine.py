@@ -218,8 +218,17 @@ def cmd_scan():
     kept = len(engine.valid_pairs)
     print(f"  Pairs: {valid_total} valid found, {kept} kept after trimming")
 
-    # Update spreads
-    engine.update_spreads()
+    # Update spreads — use live prices from Alpaca if available (intraday)
+    live_prices = {}
+    if executor:
+        try:
+            all_tickers = list(pm.all_tickers())
+            live_prices = executor.get_live_prices(all_tickers)
+            if live_prices:
+                print(f"  Live prices: {len(live_prices)} tickers from Alpaca")
+        except Exception as e:
+            print(f"  Live prices unavailable: {e}")
+    engine.update_spreads(live_prices=live_prices if live_prices else None)
 
     # Generate signals
     signals = engine.generate_signals()

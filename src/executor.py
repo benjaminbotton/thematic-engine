@@ -334,6 +334,28 @@ class AlpacaExecutor:
         resp.raise_for_status()
         return float(resp.json()["trade"]["p"])
 
+    def get_live_prices(self, tickers: list[str]) -> dict[str, float]:
+        """Get latest prices for multiple tickers using Alpaca snapshots."""
+        if requests is None:
+            raise ImportError("requests library required: pip install requests")
+        if not tickers:
+            return {}
+
+        # Alpaca snapshot endpoint handles up to ~200 tickers at once
+        symbols = ",".join(tickers)
+        url = f"{self.DATA_URL}/v2/stocks/snapshots"
+        resp = requests.get(url, headers=self.headers, params={"symbols": symbols}, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        prices = {}
+        for ticker, snap in data.items():
+            try:
+                prices[ticker] = float(snap["latestTrade"]["p"])
+            except (KeyError, TypeError):
+                pass
+        return prices
+
     # ------------------------------------------------------------------
     # Summary
     # ------------------------------------------------------------------

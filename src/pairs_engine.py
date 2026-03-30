@@ -439,14 +439,26 @@ class PairsEngine:
     # Spread updates
     # ------------------------------------------------------------------
 
-    def update_spreads(self):
-        """Refresh prices and z-scores for all valid pairs."""
+    def update_spreads(self, live_prices: dict[str, float] = None):
+        """Refresh prices and z-scores for all valid pairs.
+
+        If live_prices is provided (ticker -> current price), appends today's
+        live price to the historical series for intraday z-score updates.
+        """
         for pid, ss in list(self.valid_pairs.items()):
             try:
                 long_prices = self.data.get_prices(ss.long_ticker, self.z_lookback + 5)
                 short_prices = self.data.get_prices(ss.short_ticker, self.z_lookback + 5)
             except Exception:
                 continue
+
+            # Append live prices if available (intraday update)
+            if live_prices:
+                lp_live = live_prices.get(ss.long_ticker)
+                sp_live = live_prices.get(ss.short_ticker)
+                if lp_live and sp_live:
+                    long_prices = np.append(long_prices, lp_live)
+                    short_prices = np.append(short_prices, sp_live)
 
             n = min(len(long_prices), len(short_prices))
             long_prices = long_prices[-n:]
