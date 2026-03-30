@@ -1,0 +1,14 @@
+# Thematic Catalyst L/S Engine — automated trading scans
+# Install: crontab scripts/crontab.txt
+# Remove:  crontab -r
+# All times in system timezone (PT)
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin
+
+# Pre-market: fetch fresh data from Polygon + first scan (6:03 AM PT, weekdays)
+3 6 * * 1-5 /Users/benharkham/Desktop/Claude\ Code\ Exp/thematic-engine/scripts/fetch_and_scan.sh
+
+# Intraday scans every 30 min during market hours (6:30 AM - 1:00 PM PT, weekdays)
+30 6 * * 1-5 /Users/benharkham/Desktop/Claude\ Code\ Exp/thematic-engine/scripts/scan.sh
+0,30 7-12 * * 1-5 /Users/benharkham/Desktop/Claude\ Code\ Exp/thematic-engine/scripts/scan.sh
+0 13 * * 1-5 /Users/benharkham/Desktop/Claude\ Code\ Exp/thematic-engine/scripts/scan.sh
