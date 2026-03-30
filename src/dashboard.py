@@ -41,10 +41,10 @@ else:
             pass
 
 import yaml
+import requests as req_lib
 from pod_manager import PodManager
 from pairs_engine import PairsEngine
 from risk_guard import RiskGuard
-from data_provider import PolygonDataProvider
 
 # ---------------------------------------------------------------------------
 # Page config
@@ -136,10 +136,48 @@ def make_zscore_chart(z: float):
     return fig
 
 
+class CloudDataProvider:
+    """Fetches prices directly from Polygon REST API — no SQLite needed.
+    Uses Streamlit's @st.cache_data to cache API responses in memory."""
+
+    BASE_URL = "https://api.polygon.io"
+
+    def __init__(self, api_key: str):
+        self.api_key = api_key
+
+    def get_prices(self, ticker: str, days: int, **kw) -> np.ndarray:
+        """Fetch closing prices from Polygon. Cached by Streamlit."""
+        return _fetch_polygon_prices(self.api_key, ticker, days)
+
+    def cache_stats(self):
+        return {"tickers": "cloud", "rows": "live", "oldest_date": "N/A", "latest_date": "live"}
+
+
+@st.cache_data(ttl=300)
+def _fetch_polygon_prices(api_key: str, ticker: str, days: int) -> np.ndarray:
+    """Fetch daily closes from Polygon — cached 5 min by Streamlit."""
+    from datetime import date, timedelta
+    to_date = date.today().isoformat()
+    from_date = (date.today() - timedelta(days=days + 10)).isoformat()
+
+    url = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/{from_date}/{to_date}"
+    params = {"apiKey": api_key, "adjusted": "true", "sort": "asc", "limit": 5000}
+
+    resp = req_lib.get(url, params=params, timeout=30)
+    resp.raise_for_status()
+    data = resp.json()
+
+    if data.get("resultsCount", 0) == 0:
+        raise ValueError(f"No data for {ticker}")
+
+    closes = np.array([bar["c"] for bar in data["results"]], dtype=float)
+    return closes[-days:] if len(closes) > days else closes
+
+
 def get_spread_history(provider, long_t, short_t, days=60):
     try:
-        lp = provider.get_prices(long_t, days, cache_only=True)
-        sp = provider.get_prices(short_t, days, cache_only=True)
+        lp = provider.get_prices(long_t, days)
+        sp = provider.get_prices(short_t, days)
         n = min(len(lp), len(sp))
         return np.log(lp[-n:]) - np.log(sp[-n:])
     except Exception:
@@ -155,14 +193,11 @@ def load_system():
     with open(config_path / "settings.yaml") as f:
         settings = yaml.safe_load(f)
     pm = PodManager(config_path)
-    provider = PolygonDataProvider(db_path=str(ROOT / settings["data"]["db_path"]))
 
-    class CacheOnly:
-        def __init__(self, p): self._p = p
-        def get_prices(self, ticker, days, **kw):
-            return self._p.get_prices(ticker, days, cache_only=True)
+    api_key = get_secret("POLYGON_API_KEY")
+    provider = CloudDataProvider(api_key)
 
-    engine = PairsEngine(pm, settings, CacheOnly(provider))
+    engine = PairsEngine(pm, settings, provider)
     engine.discover_pairs()
     engine.update_spreads()
     guard = RiskGuard(settings)
@@ -582,11 +617,7 @@ with tab_config:
 
     st.divider()
 
-    st.subheader("Data Cache")
-    stats = provider.cache_stats()
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Tickers", stats["tickers"])
-    c2.metric("Price Rows", f"{stats['rows']:,}")
-    c3.metric("Latest Date", stats["latest_date"])
-    st.caption(f"Full range: {stats['oldest_date']} to {stats['latest_date']}  |  Source: Polygon.io daily bars (adjusted)")
-    st.caption(f"Scan frequency: every 30 minutes, 6:30 AM - 1:00 PM PT weekdays  |  Data refresh: 6:00 AM PT")
+    st.subheader("Data Source")
+    st.caption("Prices fetched live from Polygon.io REST API (daily bars, adjusted). Cached in-memory for 5 minutes per ticker.")
+    st.caption("Trade execution runs on a separate machine via cron (every 30 min, 6:30 AM - 1 PM PT weekdays).")
+    st.caption("This dashboard is read-only — refreshing it will never trigger trades.")
