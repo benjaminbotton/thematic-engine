@@ -42,6 +42,50 @@ from pod_manager import PodManager
 from pairs_engine import PairsEngine, PairSignal
 from risk_guard import RiskGuard, PortfolioState
 from notifier import Notifier
+from allocator import DynamicAllocator
+
+# Persistent allocator state file
+ALLOCATOR_STATE_PATH = Path(__file__).parent.parent / "data" / "allocator_state.json"
+
+
+def load_allocator(pod_ids: list[str], capital: float) -> DynamicAllocator:
+    """Load allocator state from disk, or create fresh."""
+    import json
+    allocator = DynamicAllocator(pod_ids, capital)
+    if ALLOCATOR_STATE_PATH.exists():
+        try:
+            state = json.loads(ALLOCATOR_STATE_PATH.read_text())
+            for pid, pod_state in state.get("pods", {}).items():
+                if pid in allocator.pods:
+                    p = allocator.pods[pid]
+                    p.score = pod_state.get("score", 1.0)
+                    p.total_trades = pod_state.get("total_trades", 0)
+                    p.wins = pod_state.get("wins", 0)
+                    p.losses = pod_state.get("losses", 0)
+                    p.total_pnl = pod_state.get("total_pnl", 0)
+                    p.consecutive_losses = pod_state.get("consecutive_losses", 0)
+                    p.recent_pnl = pod_state.get("recent_pnl", [])
+        except Exception:
+            pass
+    return allocator
+
+
+def save_allocator(allocator: DynamicAllocator):
+    """Persist allocator state to disk."""
+    import json
+    state = {"pods": {}}
+    for pid, p in allocator.pods.items():
+        state["pods"][pid] = {
+            "score": p.score,
+            "total_trades": p.total_trades,
+            "wins": p.wins,
+            "losses": p.losses,
+            "total_pnl": p.total_pnl,
+            "consecutive_losses": p.consecutive_losses,
+            "recent_pnl": p.recent_pnl[-8:],
+        }
+    ALLOCATOR_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    ALLOCATOR_STATE_PATH.write_text(json.dumps(state, indent=2))
 
 
 def load_config():
@@ -249,6 +293,11 @@ def cmd_scan():
     portfolio = get_portfolio_state(settings)
     executor = init_executor(settings)
 
+    # Load dynamic allocator
+    capital = settings.get("capital_base", 100000)
+    pod_ids = [pod.pod_id for pod in pm.active_pods()]
+    allocator = load_allocator(pod_ids, capital)
+
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Signal scan starting (auto-execute mode)...")
 
     # Discover / refresh pairs
@@ -257,6 +306,7 @@ def cmd_scan():
     valid_total = sum(len([s for s in scores if s.is_valid]) for scores in all_scores.values())
     kept = len(engine.valid_pairs)
     print(f"  Pairs: {valid_total} valid found, {kept} kept after trimming")
+    print(f"  Allocator: {', '.join(f'{pid}={allocator.pods[pid].score:.2f}' for pid in pod_ids)}")
 
     # Update spreads — use live prices from Alpaca if available (intraday)
     live_prices = {}
@@ -305,6 +355,14 @@ def cmd_scan():
         long_size = verdict.adjusted_long_size or sig.long_size
         short_size = verdict.adjusted_short_size or sig.short_size
 
+        # Apply dynamic allocation multiplier
+        if sig.action.startswith("ENTER"):
+            default_leg = settings.get("pairs", {}).get("sizing", {}).get("default_leg_size", 8000)
+            alloc_size = allocator.get_leg_size(sig.pod_id, default_leg, day_idx=0)
+            alloc_ratio = alloc_size / default_leg if default_leg > 0 else 1.0
+            long_size = min(long_size * alloc_ratio, settings.get("pairs", {}).get("sizing", {}).get("max_leg_size", 10000))
+            short_size = min(short_size * alloc_ratio, settings.get("pairs", {}).get("sizing", {}).get("max_leg_size", 10000))
+
         pod = pm.get_pod(sig.pod_id)
         pod_name = pod.name if pod else sig.pod_id
 
@@ -313,7 +371,7 @@ def cmd_scan():
             pair_id = f"{sig.pod_id}:{sig.long_ticker}-{sig.short_ticker}"
 
             if sig.action.startswith("ENTER"):
-                print(f"  → Executing ENTRY: Long {sig.long_ticker} ${long_size:,.0f} / Short {sig.short_ticker} ${short_size:,.0f}")
+                print(f"  → Executing ENTRY: Long {sig.long_ticker} ${long_size:,.0f} / Short {sig.short_ticker} ${short_size:,.0f} (alloc: {alloc_ratio:.1f}x)")
                 result = executor.enter_pair(
                     long_ticker=sig.long_ticker,
                     short_ticker=sig.short_ticker,
@@ -364,7 +422,12 @@ def cmd_scan():
                         pair_id=pair_id,
                     )
                     if result.success:
-                        print(f"  ✓ CLOSED: {sig.long_ticker}/{sig.short_ticker}")
+                        # Estimate P&L and record to allocator
+                        entry_price_l = long_pos.avg_entry if long_pos else 0
+                        entry_price_s = short_pos.avg_entry if short_pos else 0
+                        pnl_est = (long_pos.unrealized_pnl if long_pos else 0) + (short_pos.unrealized_pnl if short_pos else 0)
+                        allocator.record_trade(sig.pod_id, pnl_est, datetime.now().strftime("%Y-%m-%d"), 0)
+                        print(f"  ✓ CLOSED: {sig.long_ticker}/{sig.short_ticker} (P&L est: ${pnl_est:+,.0f})")
                     else:
                         print(f"  ✗ EXIT FAILED: {result.error}")
 
@@ -404,6 +467,9 @@ def cmd_scan():
     _check_circuit_breaker(guard, portfolio, executor, notifier)
     # EOD summary
     _send_eod_summary(portfolio, notifier)
+    # Save allocator state for next scan
+    save_allocator(allocator)
+    print(f"  Allocator saved. Scores: {', '.join(f'{pid}={allocator.pods[pid].score:.2f}' for pid in pod_ids)}")
 
 
 def _check_circuit_breaker(guard, portfolio, executor, notifier):
