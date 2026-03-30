@@ -48,8 +48,8 @@ hard_rules:
 # =============================================================================
 
 positions:
-  max_per_pod: 2          # 1 long + 1 short
-  total_max: 10           # 5 pods x 2
+  max_per_pod: 3          # up to 3 pairs per pod
+  total_max: 20           # supports 8-10 simultaneous pods
 
   # Size is calculated from Rule 1:
   # max_loss_per_pair = $1,500 (1.5% of $100K)
@@ -120,7 +120,8 @@ pairs:
     cointegration_pvalue: 0.05 # must pass at this significance level
     retest_interval_days: 7    # re-run cointegration weekly
     max_pairs_per_pod: 4       # up to 4 per pod for more signal flow
-    max_total_pairs: 15        # portfolio-wide cap (3 per pod avg)
+    max_total_pairs: 25        # portfolio-wide cap — supports 8+ pods + stat arb scanner
+    scan_universe: true        # also scan S&P 500 sectors for statistical pairs
 
   # Spread signal thresholds
   spread:

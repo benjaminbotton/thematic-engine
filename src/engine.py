@@ -43,6 +43,7 @@ from pairs_engine import PairsEngine, PairSignal
 from risk_guard import RiskGuard, PortfolioState
 from notifier import Notifier
 from allocator import DynamicAllocator
+from universe_scanner import get_all_universe_tickers, get_sector_pair_candidates
 
 # Persistent allocator state file
 ALLOCATOR_STATE_PATH = Path(__file__).parent.parent / "data" / "allocator_state.json"
@@ -300,19 +301,89 @@ def cmd_scan():
 
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Signal scan starting (auto-execute mode)...")
 
-    # Discover / refresh pairs
+    # Discover / refresh pairs (thematic pods)
     engine = PairsEngine(pm, settings, data)
     all_scores = engine.discover_pairs()
     valid_total = sum(len([s for s in scores if s.is_valid]) for scores in all_scores.values())
     kept = len(engine.valid_pairs)
-    print(f"  Pairs: {valid_total} valid found, {kept} kept after trimming")
-    print(f"  Allocator: {', '.join(f'{pid}={allocator.pods[pid].score:.2f}' for pid in pod_ids)}")
+    print(f"  Thematic pairs: {valid_total} valid found, {kept} kept")
+
+    # Universe scan (statistical pairs from S&P 500 sectors)
+    scan_universe = settings.get("pairs", {}).get("discovery", {}).get("scan_universe", False)
+    if scan_universe:
+        try:
+            from pairs_engine import engle_granger_test, calculate_half_life, calculate_hurst, SpreadSeries, PairScore
+            sector_candidates = get_sector_pair_candidates()
+            stat_pairs_found = 0
+            coint_pvalue = settings.get("pairs", {}).get("discovery", {}).get("cointegration_pvalue", 0.05)
+            min_hl = settings.get("pairs", {}).get("spread", {}).get("min_half_life", 2)
+            max_hl = settings.get("pairs", {}).get("spread", {}).get("max_half_life", 15)
+            hurst_thresh = settings.get("pairs", {}).get("regime", {}).get("hurst_threshold", 0.45)
+            lookback = settings.get("pairs", {}).get("discovery", {}).get("lookback_days", 60)
+
+            for ticker_a, ticker_b, sector in sector_candidates:
+                pair_id = f"stat_{sector}:{ticker_a}-{ticker_b}"
+                if pair_id in engine.valid_pairs:
+                    continue
+                try:
+                    pa = data.get_prices(ticker_a, lookback)
+                    pb = data.get_prices(ticker_b, lookback)
+                    n = min(len(pa), len(pb))
+                    if n < 30:
+                        continue
+                    pa, pb = pa[-n:], pb[-n:]
+                    pv, hr, resid = engle_granger_test(pa, pb)
+                    if pv > coint_pvalue:
+                        continue
+                    hl = calculate_half_life(resid)
+                    if hl < min_hl or hl > max_hl:
+                        continue
+                    hurst = calculate_hurst(resid, max_lag=min(20, len(resid) // 2))
+                    if hurst > hurst_thresh:
+                        continue
+
+                    from pairs_engine import rolling_zscore
+                    spread = pa - hr * pb
+                    z = rolling_zscore(spread, 20)
+                    score = (1 - pv) * 0.3 + (1 - hl / max_hl) * 0.3 + (1 - hurst) * 0.4
+
+                    engine.valid_pairs[pair_id] = SpreadSeries(
+                        pair_id=pair_id, long_ticker=ticker_a, short_ticker=ticker_b,
+                        pod_id=f"stat_{sector}", hedge_ratio=hr,
+                        spread_values=spread, spread_mean=float(np.mean(spread[-20:])),
+                        spread_std=float(np.std(spread[-20:], ddof=1)),
+                        current_zscore=z, half_life=hl, hurst_exponent=hurst,
+                    )
+                    engine.pair_scores[pair_id] = PairScore(
+                        pair_id=pair_id, long_ticker=ticker_a, short_ticker=ticker_b,
+                        pod_id=f"stat_{sector}",
+                        coint_pvalue=pv, half_life=hl, hurst=hurst,
+                        correlation=0.5, composite_score=score, is_valid=True,
+                    )
+                    stat_pairs_found += 1
+                except Exception:
+                    continue
+
+            print(f"  Statistical pairs: {stat_pairs_found} found from {len(sector_candidates)} sector candidates")
+
+            # Add stat pods to allocator
+            stat_pod_ids = set(f"stat_{sector}" for _, _, sector in sector_candidates)
+            for spid in stat_pod_ids:
+                if spid not in allocator.pods:
+                    from allocator import PodPerformance
+                    allocator.pods[spid] = PodPerformance(pod_id=spid)
+        except Exception as e:
+            print(f"  Universe scan error: {e}")
+
+    total_pairs = len(engine.valid_pairs)
+    print(f"  Total active pairs: {total_pairs}")
+    print(f"  Allocator: {', '.join(f'{pid}={allocator.pods[pid].score:.2f}' for pid in sorted(allocator.pods.keys())[:8])}...")
 
     # Update spreads — use live prices from Alpaca if available (intraday)
     live_prices = {}
     if executor:
         try:
-            all_tickers = list(pm.all_tickers())
+            all_tickers = list(pm.all_tickers() | get_all_universe_tickers())
             live_prices = executor.get_live_prices(all_tickers)
             if live_prices:
                 print(f"  Live prices: {len(live_prices)} tickers from Alpaca")
