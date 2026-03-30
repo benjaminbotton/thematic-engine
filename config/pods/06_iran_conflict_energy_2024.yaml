@@ -1,0 +1,149 @@
+pod_id: iran_conflict_energy_2024
+name: Iran Conflict Energy Security Catalyst
+status: ACTIVE
+created_date: '2026-03-30'
+source: llm_generated
+thesis:
+  core: Escalating Iran conflict creates energy security divide between traditional
+    oil/gas companies (benefiting from higher prices and strategic importance) versus
+    renewable energy companies (facing reduced investment urgency and higher financing
+    costs amid geopolitical crisis).
+  long: Traditional energy companies benefit from geopolitical premium in oil prices,
+    increased strategic importance of domestic production, and renewed focus on energy
+    security over transition. Higher oil/gas prices directly boost revenues and margins
+    while validating need for continued fossil fuel infrastructure investment.
+  short: Renewable energy companies face headwinds from higher interest rates during
+    crisis, reduced policy focus on climate transition amid security concerns, and
+    capital flight to traditional energy. Clean energy investment becomes less prioritized
+    when immediate energy security dominates policy discussions.
+  last_validated: '2026-03-30'
+  confidence: 8.5
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Escalating Iran conflict creates energy security divide between traditional
+    oil/gas companies (benef
+  notes: Claude API
+evolution_log:
+- date: '2026-03-30'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: CVX
+    name: Chevron Corp
+    thesis: Major integrated oil company benefits from higher crude prices and increased
+      strategic value of US production
+    status: active
+    added: '2026-03-30'
+  - ticker: COP
+    name: ConocoPhillips
+    thesis: Leading US shale producer gains from oil price spike and domestic energy
+      security premium
+    status: active
+    added: '2026-03-30'
+  - ticker: EOG
+    name: EOG Resources
+    thesis: Top-tier shale operator with low breakeven costs maximizes margins from
+      higher oil prices
+    status: active
+    added: '2026-03-30'
+  - ticker: PXD
+    name: Pioneer Natural Resources
+    thesis: Permian Basin leader benefits from domestic oil production strategic importance
+    status: active
+    added: '2026-03-30'
+  - ticker: MPC
+    name: Marathon Petroleum
+    thesis: Refining margins expand with crude oil volatility and product demand strength
+    status: active
+    added: '2026-03-30'
+  - ticker: VLO
+    name: Valero Energy
+    thesis: Independent refiner gains from wider crack spreads during supply disruption
+      fears
+    status: active
+    added: '2026-03-30'
+  - ticker: KMI
+    name: Kinder Morgan
+    thesis: Pipeline operator benefits from increased focus on domestic energy infrastructure
+      security
+    status: active
+    added: '2026-03-30'
+  - ticker: OKE
+    name: Oneok Inc
+    thesis: Midstream company gains from renewed emphasis on North American energy
+      independence
+    status: active
+    added: '2026-03-30'
+  short:
+  - ticker: ENPH
+    name: Enphase Energy
+    thesis: Solar technology company faces reduced policy support and capital allocation
+      away from renewables
+    status: active
+    added: '2026-03-30'
+  - ticker: SEDG
+    name: SolarEdge Technologies
+    thesis: Solar inverter manufacturer hurt by delayed clean energy transition focus
+    status: active
+    added: '2026-03-30'
+  - ticker: RUN
+    name: Sunrun Inc
+    thesis: Residential solar installer sees reduced consumer priority for solar amid
+      economic uncertainty
+    status: active
+    added: '2026-03-30'
+  - ticker: FSLR
+    name: First Solar
+    thesis: Solar panel manufacturer faces headwinds from policy shift toward energy
+      security over climate
+    status: active
+    added: '2026-03-30'
+  - ticker: PLUG
+    name: Plug Power
+    thesis: Hydrogen fuel cell company sees reduced investor appetite for speculative
+      clean energy plays
+    status: active
+    added: '2026-03-30'
+  - ticker: BE
+    name: Bloom Energy
+    thesis: Fuel cell technology faces funding challenges as capital flows to traditional
+      energy
+    status: active
+    added: '2026-03-30'
+  - ticker: NOVA
+    name: Sunnova Energy
+    thesis: Residential solar finance company hurt by higher rates and reduced clean
+      energy urgency
+    status: active
+    added: '2026-03-30'
+  - ticker: CSIQ
+    name: Canadian Solar
+    thesis: Solar manufacturer faces supply chain disruption and reduced global clean
+      energy investment
+    status: active
+    added: '2026-03-30'
+pairs:
+  hints:
+  - long: CVX
+    short: ENPH
+    rationale: Large-cap energy security play vs high-beta solar technology - clear
+      geopolitical energy divergence
+  - long: COP
+    short: SEDG
+    rationale: Domestic oil production beneficiary vs solar equipment dependent on
+      stable policy support
+  - long: MPC
+    short: RUN
+    rationale: Refining margin expansion vs residential solar facing financing and
+      priority headwinds
+  - long: EOG
+    short: PLUG
+    rationale: Profitable shale producer vs speculative hydrogen play losing investor
+      favor during crisis
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
