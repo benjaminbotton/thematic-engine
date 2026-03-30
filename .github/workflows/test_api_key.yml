@@ -1,0 +1,36 @@
+name: Test Anthropic API Key
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Test Anthropic API Key
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          pip install anthropic -q
+          python3 -c "
+          import anthropic, os
+          key = os.environ.get('ANTHROPIC_API_KEY', '')
+          if not key:
+              print('ERROR: ANTHROPIC_API_KEY secret not found')
+              exit(1)
+          print(f'Key found: {key[:8]}...{key[-4:]}')
+          client = anthropic.Anthropic(api_key=key)
+          resp = client.messages.create(
+              model='claude-sonnet-4-20250514',
+              max_tokens=50,
+              messages=[{'role': 'user', 'content': 'Say OK'}],
+          )
+          print(f'Response: {resp.content[0].text}')
+          print('API key is valid!')
+          "
