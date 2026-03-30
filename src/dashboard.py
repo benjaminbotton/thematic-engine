@@ -23,6 +23,7 @@ import streamlit as st
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
+# Load env from .env file (local) or st.secrets (Streamlit Cloud)
 env_path = ROOT / ".env"
 if env_path.exists():
     with open(env_path) as f:
@@ -31,6 +32,13 @@ if env_path.exists():
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
                 os.environ[k] = v
+else:
+    # On Streamlit Cloud — copy secrets to env vars for downstream modules
+    for key in ["POLYGON_API_KEY", "ALPACA_API_KEY", "ALPACA_SECRET_KEY"]:
+        try:
+            os.environ[key] = st.secrets[key]
+        except Exception:
+            pass
 
 import yaml
 from pod_manager import PodManager
@@ -46,7 +54,14 @@ st.set_page_config(page_title="Thematic L/S Engine", layout="wide", initial_side
 # ---------------------------------------------------------------------------
 # Password protection
 # ---------------------------------------------------------------------------
-DASHBOARD_PASSWORD = os.environ.get("DASHBOARD_PASSWORD", "")
+def get_secret(key, default=""):
+    """Read from Streamlit secrets (cloud) or os.environ (local)."""
+    try:
+        return st.secrets[key]
+    except Exception:
+        return os.environ.get(key, default)
+
+DASHBOARD_PASSWORD = get_secret("DASHBOARD_PASSWORD")
 
 if DASHBOARD_PASSWORD:
     if "authenticated" not in st.session_state:
