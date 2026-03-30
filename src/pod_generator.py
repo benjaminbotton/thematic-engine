@@ -575,14 +575,13 @@ Requirements:
 
 def generate_pod_from_news(headlines: list[str], api_key: Optional[str] = None) -> Optional[GeneratedPod]:
     """Call Claude API to generate a pod from news headlines."""
-    if anthropic is None:
-        raise ImportError("pip install anthropic")
+    import anthropic as anth
 
     key = api_key or os.environ.get("ANTHROPIC_API_KEY")
     if not key:
         raise ValueError("Set ANTHROPIC_API_KEY")
 
-    client = anthropic.Anthropic(api_key=key)
+    client = anth.Anthropic(api_key=key)
 
     prompt = "Here are today's financial headlines:\n\n"
     for h in headlines:
