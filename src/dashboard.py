@@ -211,16 +211,51 @@ def load_alpaca():
         ex = AlpacaExecutor(paper=True)
         acct = ex.get_account()
         positions = ex.get_positions()
-        return acct, positions, None
+        return acct, positions, ex, None
     except Exception as e:
-        return None, [], str(e)
+        return None, [], None, str(e)
+
+
+@st.cache_data(ttl=60)
+def load_order_history():
+    """Fetch all order history from Alpaca."""
+    try:
+        alpaca_key = get_secret("ALPACA_API_KEY")
+        alpaca_secret = get_secret("ALPACA_SECRET_KEY")
+        if not alpaca_key:
+            return []
+        headers = {
+            "APCA-API-KEY-ID": alpaca_key,
+            "APCA-API-SECRET-KEY": alpaca_secret,
+        }
+        orders = []
+        url = "https://paper-api.alpaca.markets/v2/orders?status=all&limit=500&direction=desc"
+        resp = req_lib.get(url, headers=headers, timeout=30)
+        if resp.status_code == 200:
+            for o in resp.json():
+                filled_price = float(o.get("filled_avg_price", 0) or 0)
+                filled_qty = int(float(o.get("filled_qty", 0) or 0))
+                orders.append({
+                    "Time": o["created_at"][:19].replace("T", " "),
+                    "Side": o["side"].upper(),
+                    "Ticker": o["symbol"],
+                    "Qty": int(float(o.get("qty", 0))),
+                    "Filled": filled_qty,
+                    "Price": f"${filled_price:.2f}" if filled_price > 0 else "—",
+                    "Notional": f"${filled_price * filled_qty:,.0f}" if filled_price > 0 else "—",
+                    "Status": o["status"].upper(),
+                    "Type": o.get("type", "market").upper(),
+                })
+        return orders
+    except Exception:
+        return []
 
 
 # ---------------------------------------------------------------------------
 # Load
 # ---------------------------------------------------------------------------
 settings, pm, provider, engine, guard = load_system()
-acct, positions, alpaca_err = load_alpaca()
+acct, positions, executor, alpaca_err = load_alpaca()
 signals = engine.generate_signals()
 capital = settings.get("capital_base", 100000)
 
@@ -278,7 +313,7 @@ st.divider()
 # ===========================================================================
 # TABS
 # ===========================================================================
-tab_overview, tab_pairs, tab_pods, tab_config = st.tabs(["Overview", "Pairs & Spreads", "Thematic Pods", "Config & Risk"])
+tab_overview, tab_pairs, tab_pods, tab_log, tab_config = st.tabs(["Overview", "Pairs & Spreads", "Thematic Pods", "Trade Log", "Config & Risk"])
 
 
 # ===========================================================================
@@ -549,7 +584,72 @@ are mathematically linked and tend to revert to a stable relationship.
 
 
 # ===========================================================================
-# TAB 4: Config & Risk
+# TAB 4: Trade Log
+# ===========================================================================
+with tab_log:
+    st.subheader("Trade Log")
+    st.caption("Every order submitted to Alpaca paper trading — most recent first")
+
+    orders = load_order_history()
+    if orders:
+        # Summary stats
+        filled_orders = [o for o in orders if o["Status"] == "FILLED"]
+        buys = [o for o in filled_orders if o["Side"] == "BUY"]
+        sells = [o for o in filled_orders if o["Side"] == "SELL"]
+
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Total Orders", len(orders))
+        c2.metric("Filled", len(filled_orders))
+        c3.metric("Buy Orders", len(buys))
+        c4.metric("Sell/Short Orders", len(sells))
+
+        st.divider()
+
+        # Filter
+        status_filter = st.selectbox("Filter by status", ["All", "FILLED", "CANCELED", "ACCEPTED", "REJECTED"], index=0)
+        ticker_filter = st.text_input("Filter by ticker", placeholder="e.g. VRT")
+
+        filtered = orders
+        if status_filter != "All":
+            filtered = [o for o in filtered if o["Status"] == status_filter]
+        if ticker_filter:
+            filtered = [o for o in filtered if ticker_filter.upper() in o["Ticker"].upper()]
+
+        if filtered:
+            st.dataframe(
+                pd.DataFrame(filtered),
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Time": st.column_config.TextColumn("Time", width="medium"),
+                    "Side": st.column_config.TextColumn("Side", width="small"),
+                    "Ticker": st.column_config.TextColumn("Ticker", width="small"),
+                    "Qty": st.column_config.NumberColumn("Qty", width="small"),
+                    "Filled": st.column_config.NumberColumn("Filled", width="small"),
+                    "Price": st.column_config.TextColumn("Avg Price", width="small"),
+                    "Notional": st.column_config.TextColumn("Notional", width="small"),
+                    "Status": st.column_config.TextColumn("Status", width="small"),
+                },
+            )
+            st.caption(f"Showing {len(filtered)} of {len(orders)} orders")
+        else:
+            st.info("No orders match the filter")
+    else:
+        st.info("No order history available. Orders will appear here once the engine starts trading.")
+
+    with st.expander("How to read the trade log"):
+        st.markdown("""
+- **BUY** = opening a long position (betting the stock goes up) or closing a short position
+- **SELL** = opening a short position (betting it goes down) or closing a long position
+- Pairs always appear as **two orders at the same time** — one buy and one sell. That's the long/short pair.
+- **FILLED** = order completed successfully at the shown price
+- **CANCELED** = order was canceled (usually because the other leg of the pair failed)
+- **Notional** = total dollar value of the trade (price × quantity)
+""")
+
+
+# ===========================================================================
+# TAB 5: Config & Risk
 # ===========================================================================
 with tab_config:
     st.subheader("Risk Rules")
