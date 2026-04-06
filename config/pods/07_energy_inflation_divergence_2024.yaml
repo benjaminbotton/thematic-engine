@@ -1,0 +1,146 @@
+pod_id: energy_inflation_divergence_2024
+name: Energy-Driven Inflation Divergence
+status: ACTIVE
+created_date: '2026-04-06'
+source: llm_generated
+thesis:
+  core: Escalating Iran conflict and oil prices above $110/barrel create stark divergence
+    between energy-sensitive inflation beneficiaries and rate-sensitive sectors facing
+    Fed hawkishness
+  long: Energy companies, inflation-hedged REITs, and commodity-linked businesses
+    benefit from sustained high oil prices and inflationary pressures. These sectors
+    see margin expansion, pricing power, and asset revaluation as energy costs remain
+    elevated due to geopolitical tensions.
+  short: 'Interest rate-sensitive sectors face dual headwinds: higher energy costs
+    squeeze margins while persistent inflation forces Fed to maintain/increase hawkish
+    stance. These sectors suffer from compressed valuations, higher borrowing costs,
+    and reduced consumer discretionary spending.'
+  last_validated: '2026-04-06'
+  confidence: 8.5
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Escalating Iran conflict and oil prices above $110/barrel create stark divergence
+    between energy-sen
+  notes: Claude API
+evolution_log:
+- date: '2026-04-06'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: CVX
+    name: Chevron Corp
+    thesis: Direct beneficiary of $110+ oil with strong downstream margins and dividend
+      capacity
+    status: active
+    added: '2026-04-06'
+  - ticker: EOG
+    name: EOG Resources
+    thesis: Low-cost shale producer with significant operating leverage to oil price
+      increases
+    status: active
+    added: '2026-04-06'
+  - ticker: KMI
+    name: Kinder Morgan
+    thesis: Pipeline infrastructure benefits from higher volumes and energy transport
+      demand
+    status: active
+    added: '2026-04-06'
+  - ticker: VLO
+    name: Valero Energy
+    thesis: Refining margins expand with high oil prices and strong crack spreads
+    status: active
+    added: '2026-04-06'
+  - ticker: PXD
+    name: Pioneer Natural Resources
+    thesis: Permian Basin leader with low breakeven costs and strong free cash flow
+      generation
+    status: active
+    added: '2026-04-06'
+  - ticker: PSX
+    name: Phillips 66
+    thesis: Integrated energy company benefiting from both upstream and downstream
+      operations
+    status: active
+    added: '2026-04-06'
+  - ticker: EQT
+    name: EQT Corporation
+    thesis: Natural gas producer benefits from energy substitution and higher commodity
+      prices
+    status: active
+    added: '2026-04-06'
+  - ticker: OKE
+    name: ONEOK Inc
+    thesis: Midstream energy infrastructure with fee-based cash flows tied to energy
+      activity
+    status: active
+    added: '2026-04-06'
+  short:
+  - ticker: MAA
+    name: Mid-America Apartment Communities
+    thesis: Apartment REIT faces higher financing costs and reduced affordability
+      for tenants
+    status: active
+    added: '2026-04-06'
+  - ticker: EXR
+    name: Extended Stay America
+    thesis: Self-storage REIT vulnerable to rate sensitivity and consumer spending
+      pressure
+    status: active
+    added: '2026-04-06'
+  - ticker: PEAK
+    name: Healthpeak Properties
+    thesis: Healthcare REIT with significant refinancing risk in higher rate environment
+    status: active
+    added: '2026-04-06'
+  - ticker: REG
+    name: Regency Centers
+    thesis: Retail REIT facing reduced consumer spending from higher energy costs
+    status: active
+    added: '2026-04-06'
+  - ticker: UDR
+    name: UDR Inc
+    thesis: Residential REIT with floating rate debt exposure and affordability pressures
+    status: active
+    added: '2026-04-06'
+  - ticker: ESS
+    name: Essex Property Trust
+    thesis: West Coast apartment REIT particularly sensitive to rate changes and housing
+      costs
+    status: active
+    added: '2026-04-06'
+  - ticker: CPT
+    name: Camden Property Trust
+    thesis: Sunbelt apartment REIT facing margin compression from energy and rate
+      headwinds
+    status: active
+    added: '2026-04-06'
+  - ticker: AIV
+    name: Apartment Investment and Management
+    thesis: Apartment REIT with significant debt refinancing needs in higher rate
+      cycle
+    status: active
+    added: '2026-04-06'
+pairs:
+  hints:
+  - long: CVX
+    short: MAA
+    rationale: Oil major benefits vs apartment REIT suffering from energy cost inflation
+      and rate sensitivity
+  - long: EOG
+    short: EXR
+    rationale: Shale oil producer gains vs storage REIT facing consumer spending pressure
+      from energy costs
+  - long: VLO
+    short: REG
+    rationale: Refiner margin expansion vs retail REIT declining foot traffic from
+      higher gas prices
+  - long: KMI
+    short: UDR
+    rationale: Energy infrastructure cash flows vs residential REIT refinancing risk
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
