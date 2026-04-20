@@ -1,0 +1,159 @@
+pod_id: ME_DEESCALATION_2024
+name: Middle East De-escalation Trade
+status: ACTIVE
+created_date: '2026-04-20'
+source: llm_generated
+thesis:
+  core: Iran-US tensions appear to be cooling with hopes for diplomatic talks and
+    Strait of Hormuz reopening, creating a sharp divergence between energy/defense
+    stocks (hurt by reduced war premiums) and consumer discretionary/travel stocks
+    (benefiting from lower oil prices and reduced geopolitical risk).
+  long: Companies exposed to consumer spending, travel, and economic normalization
+    benefit from falling oil prices, reduced inflation expectations, and diminished
+    geopolitical risk premium. Lower energy costs boost disposable income while reduced
+    war fears encourage discretionary spending and travel.
+  short: Energy and defense companies face headwinds from collapsing oil prices as
+    war premiums evaporate and geopolitical tensions ease. Reduced military spending
+    urgency and oversupply concerns in energy markets create sustained pressure on
+    these sectors.
+  last_validated: '2026-04-20'
+  confidence: 8.5
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Iran-US tensions appear to be cooling with hopes for diplomatic talks and
+    Strait of Hormuz reopening
+  notes: Claude API
+evolution_log:
+- date: '2026-04-20'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: CCL
+    name: Carnival Corp
+    thesis: Cruise demand rebounds as Middle East tensions ease and consumer confidence
+      improves with lower oil prices
+    status: active
+    added: '2026-04-20'
+  - ticker: NCLH
+    name: Norwegian Cruise Line
+    thesis: Travel normalization accelerates as geopolitical risks diminish, boosting
+      cruise bookings
+    status: active
+    added: '2026-04-20'
+  - ticker: AAL
+    name: American Airlines
+    thesis: Lower jet fuel costs and reduced flight path restrictions improve margins
+      significantly
+    status: active
+    added: '2026-04-20'
+  - ticker: UAL
+    name: United Airlines
+    thesis: Benefits from both lower fuel costs and normalized international routing
+      as tensions ease
+    status: active
+    added: '2026-04-20'
+  - ticker: MGM
+    name: MGM Resorts
+    thesis: Discretionary spending increases as consumer confidence rises with de-escalation
+    status: active
+    added: '2026-04-20'
+  - ticker: WYNN
+    name: Wynn Resorts
+    thesis: Luxury travel and gaming benefit from wealth effect of rising markets
+      and lower oil prices
+    status: active
+    added: '2026-04-20'
+  - ticker: RCL
+    name: Royal Caribbean
+    thesis: Premium cruise operator gains from travel normalization and lower operating
+      costs
+    status: active
+    added: '2026-04-20'
+  - ticker: LVS
+    name: Las Vegas Sands
+    thesis: International casino operations benefit from reduced geopolitical uncertainty
+    status: active
+    added: '2026-04-20'
+  - ticker: HLT
+    name: Hilton Worldwide
+    thesis: Hotel demand increases as business and leisure travel normalize with de-escalation
+    status: active
+    added: '2026-04-20'
+  short:
+  - ticker: CVX
+    name: Chevron Corp
+    thesis: Oil price collapse from Iran de-escalation and Hormuz reopening pressures
+      integrated oil margins
+    status: active
+    added: '2026-04-20'
+  - ticker: COP
+    name: ConocoPhillips
+    thesis: Pure-play oil producer faces direct impact from falling crude prices as
+      war premiums disappear
+    status: active
+    added: '2026-04-20'
+  - ticker: EOG
+    name: EOG Resources
+    thesis: Shale producer vulnerable to oil price decline as geopolitical premiums
+      evaporate
+    status: active
+    added: '2026-04-20'
+  - ticker: PXD
+    name: Pioneer Natural Resources
+    thesis: Permian Basin operator faces margin compression from lower oil prices
+    status: active
+    added: '2026-04-20'
+  - ticker: LMT
+    name: Lockheed Martin
+    thesis: Defense contractor pressured by reduced urgency for military spending
+      as tensions ease
+    status: active
+    added: '2026-04-20'
+  - ticker: RTX
+    name: Raytheon Technologies
+    thesis: Defense and aerospace conglomerate faces headwinds from de-escalation
+      reducing defense budget urgency
+    status: active
+    added: '2026-04-20'
+  - ticker: NOC
+    name: Northrop Grumman
+    thesis: Defense contractor vulnerable to reduced geopolitical tensions dampening
+      military spending
+    status: active
+    added: '2026-04-20'
+  - ticker: GD
+    name: General Dynamics
+    thesis: Defense systems demand moderates as immediate war threats diminish
+    status: active
+    added: '2026-04-20'
+  - ticker: HES
+    name: Hess Corp
+    thesis: Oil producer faces pressure from collapsing war premiums and oversupply
+      concerns
+    status: active
+    added: '2026-04-20'
+pairs:
+  hints:
+  - long: CCL
+    short: CVX
+    rationale: Cruise lines benefit from lower fuel costs while oil majors lose war
+      premiums - clear cost transfer
+  - long: AAL
+    short: COP
+    rationale: Airlines gain from cheaper jet fuel while oil producers lose pricing
+      power from de-escalation
+  - long: MGM
+    short: LMT
+    rationale: Discretionary spending increases as defense urgency decreases - capital
+      allocation shift
+  - long: RCL
+    short: RTX
+    rationale: Travel normalization vs defense spending moderation - opposite beneficiaries
+      of peace dividend
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
