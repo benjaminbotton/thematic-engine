@@ -1,0 +1,147 @@
+pod_id: overheating_economy_2026
+name: Economic Overheating vs. Defensive Positioning
+status: ACTIVE
+created_date: '2026-04-27'
+source: llm_generated
+thesis:
+  core: Markets at record highs amid signs of economic overheating create divergent
+    opportunities between cyclical growth beneficiaries and defensive recession-hedge
+    plays
+  long: Cyclical and high-beta stocks that benefit from continued economic expansion,
+    elevated consumer spending, and infrastructure investment during the overheating
+    phase before potential correction
+  short: Defensive, low-volatility stocks and recession-hedge sectors that investors
+    flock to when economic overheating concerns materialize into actual slowdown fears
+  last_validated: '2026-04-27'
+  confidence: 85
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Markets at record highs amid signs of economic overheating create divergent
+    opportunities between cy
+  notes: Claude API
+evolution_log:
+- date: '2026-04-27'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: CAT
+    name: Caterpillar Inc
+    thesis: Heavy machinery demand peaks during economic overheating as infrastructure
+      and construction activity surges
+    status: active
+    added: '2026-04-27'
+  - ticker: FCX
+    name: Freeport-McMoRan Inc
+    thesis: Copper and commodity prices benefit from overheated industrial demand
+      and infrastructure spending
+    status: active
+    added: '2026-04-27'
+  - ticker: XLE
+    name: Energy Select Sector SPDR Fund
+    thesis: Energy sector thrives on high economic activity and elevated commodity
+      demand during overheating periods
+    status: active
+    added: '2026-04-27'
+  - ticker: CF
+    name: CF Industries Holdings Inc
+    thesis: Fertilizer demand remains strong during economic expansion as agricultural
+      investment increases
+    status: active
+    added: '2026-04-27'
+  - ticker: NUE
+    name: Nucor Corporation
+    thesis: Steel demand peaks during overheated construction and manufacturing cycles
+    status: active
+    added: '2026-04-27'
+  - ticker: DHI
+    name: D.R. Horton Inc
+    thesis: Homebuilding benefits from continued economic expansion before overheating
+      leads to policy tightening
+    status: active
+    added: '2026-04-27'
+  - ticker: UAL
+    name: United Airlines Holdings Inc
+    thesis: Travel demand remains elevated during economic overheating as consumer
+      spending power peaks
+    status: active
+    added: '2026-04-27'
+  - ticker: MGM
+    name: MGM Resorts International
+    thesis: Discretionary spending on entertainment and travel peaks during overheated
+      economic conditions
+    status: active
+    added: '2026-04-27'
+  short:
+  - ticker: WMT
+    name: Walmart Inc
+    thesis: Defensive consumer staples underperform when investors anticipate economic
+      slowdown from overheating
+    status: active
+    added: '2026-04-27'
+  - ticker: KO
+    name: The Coca-Cola Company
+    thesis: Low-volatility consumer defensive stocks lag during late-cycle positioning
+      before recession fears
+    status: active
+    added: '2026-04-27'
+  - ticker: PG
+    name: Procter & Gamble Co
+    thesis: Staples companies see multiple compression as investors rotate to recession
+      hedges
+    status: active
+    added: '2026-04-27'
+  - ticker: JNJ
+    name: Johnson & Johnson
+    thesis: Healthcare defensives underperform as overheating concerns shift focus
+      to true recession hedges
+    status: active
+    added: '2026-04-27'
+  - ticker: VZ
+    name: Verizon Communications Inc
+    thesis: Utility-like telecoms lag as investors seek either growth or pure defensive
+      plays
+    status: active
+    added: '2026-04-27'
+  - ticker: T
+    name: AT&T Inc
+    thesis: High-dividend defensive stocks underperform during late-cycle economic
+      uncertainty
+    status: active
+    added: '2026-04-27'
+  - ticker: KHC
+    name: The Kraft Heinz Company
+    thesis: Food processing companies face margin pressure and multiple compression
+      during economic transitions
+    status: active
+    added: '2026-04-27'
+  - ticker: GIS
+    name: General Mills Inc
+    thesis: Consumer staples see reduced investor interest during overheating-to-slowdown
+      transition periods
+    status: active
+    added: '2026-04-27'
+pairs:
+  hints:
+  - long: CAT
+    short: WMT
+    rationale: Industrial cyclical vs defensive consumer staples - direct overheating
+      beneficiary vs recession hedge
+  - long: FCX
+    short: KO
+    rationale: Commodity cyclical vs defensive beverage - commodity boom vs defensive
+      positioning
+  - long: DHI
+    short: PG
+    rationale: Housing cyclical vs consumer defensive - construction peak vs staples
+      rotation
+  - long: UAL
+    short: VZ
+    rationale: Discretionary travel vs defensive telecom - economic expansion vs utility-like
+      safety
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
