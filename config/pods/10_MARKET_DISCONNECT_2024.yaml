@@ -1,0 +1,146 @@
+pod_id: MARKET_DISCONNECT_2024
+name: Stock Market Euphoria vs Economic Reality Disconnect
+status: ACTIVE
+created_date: '2026-05-04'
+source: llm_generated
+thesis:
+  core: Record-high stock markets are increasingly detached from underlying economic
+    fundamentals, creating a divergence between companies benefiting from market exuberance
+    versus those exposed to real economic conditions.
+  long: Companies that benefit from elevated market conditions, financial speculation,
+    and investor euphoria will outperform as markets remain disconnected from reality.
+    These include wealth management firms, trading platforms, luxury goods, and speculative
+    growth sectors that thrive on easy money and high valuations.
+  short: Companies directly exposed to real economic fundamentals - consumer spending,
+    employment trends, and economic cycles - will underperform as the disconnect between
+    market performance and economic reality widens. These include traditional retailers,
+    employment services, and economically-sensitive industrials.
+  last_validated: '2026-05-04'
+  confidence: 85
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: 'Record-high stock markets are increasingly detached from underlying economic
+    fundamentals, creating '
+  notes: Claude API
+evolution_log:
+- date: '2026-05-04'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: MS
+    name: Morgan Stanley
+    thesis: Wealth management and trading revenues surge during market euphoria periods
+    status: active
+    added: '2026-05-04'
+  - ticker: SCHW
+    name: Charles Schwab Corp
+    thesis: Benefits from increased retail trading activity and asset gathering in
+      buoyant markets
+    status: active
+    added: '2026-05-04'
+  - ticker: TPG
+    name: TPG Inc
+    thesis: Private equity valuations inflated by market exuberance, driving higher
+      management fees
+    status: active
+    added: '2026-05-04'
+  - ticker: COIN
+    name: Coinbase Global
+    thesis: Cryptocurrency trading volumes spike during speculative market phases
+    status: active
+    added: '2026-05-04'
+  - ticker: RH
+    name: RH (Restoration Hardware)
+    thesis: Luxury home furnishings benefit from wealth effect and market-driven consumer
+      confidence
+    status: active
+    added: '2026-05-04'
+  - ticker: NFLX
+    name: Netflix Inc
+    thesis: Streaming entertainment benefits from market euphoria driving discretionary
+      spending
+    status: active
+    added: '2026-05-04'
+  - ticker: PTON
+    name: Peloton Interactive
+    thesis: Premium fitness equipment thrives on market-driven consumer confidence
+    status: active
+    added: '2026-05-04'
+  - ticker: ROKU
+    name: Roku Inc
+    thesis: Advertising-dependent streaming platform benefits from market euphoria
+    status: active
+    added: '2026-05-04'
+  short:
+  - ticker: KSS
+    name: Kohl's Corp
+    thesis: Traditional retailer directly exposed to real consumer spending patterns
+      and economic stress
+    status: active
+    added: '2026-05-04'
+  - ticker: GPS
+    name: Gap Inc
+    thesis: Apparel retailer sensitive to actual consumer discretionary spending,
+      not market sentiment
+    status: active
+    added: '2026-05-04'
+  - ticker: MAN
+    name: ManpowerGroup
+    thesis: Employment services directly reflect real labor market conditions vs.
+      market optimism
+    status: active
+    added: '2026-05-04'
+  - ticker: RHI
+    name: Robert Half Inc
+    thesis: Staffing firm revenues tied to actual employment trends, not financial
+      market performance
+    status: active
+    added: '2026-05-04'
+  - ticker: BBY
+    name: Best Buy Co
+    thesis: Electronics retailer exposed to real consumer spending on durable goods
+    status: active
+    added: '2026-05-04'
+  - ticker: DKS
+    name: Dick's Sporting Goods
+    thesis: Sporting goods retailer reflects actual consumer discretionary spending
+      patterns
+    status: active
+    added: '2026-05-04'
+  - ticker: EMR
+    name: Emerson Electric
+    thesis: Industrial automation tied to real manufacturing activity, not market
+      sentiment
+    status: active
+    added: '2026-05-04'
+  - ticker: ITW
+    name: Illinois Tool Works
+    thesis: Diversified industrial exposed to actual economic activity across multiple
+      sectors
+    status: active
+    added: '2026-05-04'
+pairs:
+  hints:
+  - long: MS
+    short: MAN
+    rationale: Morgan Stanley benefits from market trading/wealth management while
+      ManpowerGroup reflects real employment conditions
+  - long: SCHW
+    short: RHI
+    rationale: Schwab gains from market euphoria driving trading while Robert Half
+      shows actual labor market health
+  - long: RH
+    short: KSS
+    rationale: Luxury RH benefits from market wealth effect while Kohl's faces real
+      middle-class spending pressure
+  - long: COIN
+    short: BBY
+    rationale: Coinbase thrives on speculative market activity while Best Buy depends
+      on actual consumer electronics demand
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
