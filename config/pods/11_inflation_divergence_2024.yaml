@@ -1,0 +1,138 @@
+pod_id: inflation_divergence_2024
+name: Inflation Expectations vs Reality Divergence
+status: ACTIVE
+created_date: '2026-05-11'
+source: llm_generated
+thesis:
+  core: Market inflation fears are running ahead of economic reality, creating a bifurcated
+    environment where inflation-sensitive sectors face pressure while inflation-resistant/beneficiary
+    sectors rally despite moderating actual inflation data.
+  long: Companies with pricing power, fixed-rate debt benefits, or inflation-hedged
+    revenue streams will outperform as markets overreact to inflation fears while
+    actual inflation moderates, creating valuation dislocations favoring businesses
+    that can maintain margins and benefit from rate environment changes.
+  short: Interest-sensitive and inflation-vulnerable sectors will underperform as
+    markets price in persistent inflation concerns, pressuring companies with variable
+    costs, rate-sensitive business models, and margin compression risks even as underlying
+    inflation trends may be more benign.
+  last_validated: '2026-05-11'
+  confidence: 0.78
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Market inflation fears are running ahead of economic reality, creating a
+    bifurcated environment wher
+  notes: Claude API
+evolution_log:
+- date: '2026-05-11'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: WMT
+    name: Walmart Inc
+    thesis: Pricing power in essentials, benefits from consumer trading down during
+      inflation fears
+    status: active
+    added: '2026-05-11'
+  - ticker: PG
+    name: Procter & Gamble
+    thesis: Strong brand pricing power, essential consumer products with inelastic
+      demand
+    status: active
+    added: '2026-05-11'
+  - ticker: JNJ
+    name: Johnson & Johnson
+    thesis: Healthcare pricing resilience, fixed-rate debt benefits from rate environment
+    status: active
+    added: '2026-05-11'
+  - ticker: KO
+    name: Coca-Cola Company
+    thesis: Global pricing power, inflation-protected revenue streams, brand strength
+    status: active
+    added: '2026-05-11'
+  - ticker: MCD
+    name: McDonald's Corporation
+    thesis: Menu pricing flexibility, inflation-hedged franchise model
+    status: active
+    added: '2026-05-11'
+  - ticker: UNH
+    name: UnitedHealth Group
+    thesis: Healthcare inflation pass-through ability, premium pricing power
+    status: active
+    added: '2026-05-11'
+  - ticker: HD
+    name: Home Depot
+    thesis: Essential home improvement demand, supplier pricing power transfer
+    status: active
+    added: '2026-05-11'
+  - ticker: TGT
+    name: Target Corporation
+    thesis: Retail pricing flexibility, inventory management advantages
+    status: active
+    added: '2026-05-11'
+  short:
+  - ticker: REIT
+    name: VanEck Real Estate ETF
+    thesis: Interest rate sensitivity, refinancing risks, cap rate expansion pressure
+    status: active
+    added: '2026-05-11'
+  - ticker: XLU
+    name: Utilities Select SPDR
+    thesis: Rate-sensitive sector, regulatory pricing lags, dividend yield competition
+    status: active
+    added: '2026-05-11'
+  - ticker: TLT
+    name: 20+ Year Treasury Bond ETF
+    thesis: Direct inverse correlation to inflation expectations and rates
+    status: active
+    added: '2026-05-11'
+  - ticker: XLF
+    name: Financial Select SPDR
+    thesis: Net interest margin pressure, credit quality concerns in inflation environment
+    status: active
+    added: '2026-05-11'
+  - ticker: IYR
+    name: iShares US Real Estate ETF
+    thesis: Commercial real estate headwinds, rate sensitivity, refinancing cliff
+    status: active
+    added: '2026-05-11'
+  - ticker: MORT
+    name: VanEck Mortgage REIT ETF
+    thesis: Spread compression, funding cost increases, duration mismatch risks
+    status: active
+    added: '2026-05-11'
+  - ticker: PSA
+    name: Public Storage
+    thesis: Consumer discretionary pressure reduces storage demand, rate-sensitive
+      valuation
+    status: active
+    added: '2026-05-11'
+  - ticker: AMT
+    name: American Tower Corp
+    thesis: High dividend yield faces competition from rising rates, growth capex
+      pressure
+    status: active
+    added: '2026-05-11'
+pairs:
+  hints:
+  - long: WMT
+    short: REIT
+    rationale: Essential retail strength vs. rate-sensitive real estate during inflation
+      fear period
+  - long: PG
+    short: XLU
+    rationale: Consumer staples pricing power vs. regulated utility rate lag exposure
+  - long: MCD
+    short: TLT
+    rationale: Inflation-protected franchise model vs. direct treasury rate/inflation
+      sensitivity
+  - long: UNH
+    short: XLF
+    rationale: Healthcare pricing power vs. banking sector margin pressure from rate
+      environment
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
