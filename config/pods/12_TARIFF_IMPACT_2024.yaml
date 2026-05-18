@@ -1,0 +1,142 @@
+pod_id: TARIFF_IMPACT_2024
+name: Trump Tariff Policy Implementation
+status: ACTIVE
+created_date: '2026-05-18'
+source: llm_generated
+thesis:
+  core: Trump's renewed tariff policies will create significant cost pressures for
+    import-dependent companies while benefiting domestic producers and tariff-protected
+    industries.
+  long: Domestic manufacturers, energy producers, and companies with primarily US-based
+    supply chains will benefit from reduced foreign competition and potential reshoring
+    trends driven by tariff policies.
+  short: Import-heavy retailers, consumer goods companies, and manufacturers dependent
+    on foreign supply chains will face margin compression from increased input costs
+    and potential consumer demand destruction.
+  last_validated: '2026-05-18'
+  confidence: 85
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Trump's renewed tariff policies will create significant cost pressures for
+    import-dependent companie
+  notes: Claude API
+evolution_log:
+- date: '2026-05-18'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: CLF
+    name: Cleveland-Cliffs Inc
+    thesis: Domestic steel producer benefits directly from steel tariffs reducing
+      foreign competition
+    status: active
+    added: '2026-05-18'
+  - ticker: NUE
+    name: Nucor Corporation
+    thesis: Leading US steel manufacturer gains pricing power from import tariff protection
+    status: active
+    added: '2026-05-18'
+  - ticker: FCX
+    name: Freeport-McMoRan Inc
+    thesis: Domestic copper mining benefits from reduced Chinese imports and infrastructure
+      spending
+    status: active
+    added: '2026-05-18'
+  - ticker: CF
+    name: CF Industries Holdings
+    thesis: Domestic fertilizer producer benefits from agricultural trade protection
+      policies
+    status: active
+    added: '2026-05-18'
+  - ticker: MOS
+    name: The Mosaic Company
+    thesis: US-based fertilizer and crop nutrition company gains from agricultural
+      tariff policies
+    status: active
+    added: '2026-05-18'
+  - ticker: EOG
+    name: EOG Resources Inc
+    thesis: Domestic energy producer benefits from energy independence policies and
+      reduced imports
+    status: active
+    added: '2026-05-18'
+  - ticker: DVN
+    name: Devon Energy Corporation
+    thesis: US shale producer gains from policies favoring domestic energy production
+    status: active
+    added: '2026-05-18'
+  - ticker: CAT
+    name: Caterpillar Inc
+    thesis: Benefits from domestic infrastructure spending and reduced competition
+      from Chinese machinery
+    status: active
+    added: '2026-05-18'
+  short:
+  - ticker: COST
+    name: Costco Wholesale Corporation
+    thesis: Heavy reliance on imported goods faces margin compression from tariff-induced
+      cost increases
+    status: active
+    added: '2026-05-18'
+  - ticker: TJX
+    name: The TJX Companies Inc
+    thesis: Discount retailer with significant import exposure faces rising input
+      costs from tariffs
+    status: active
+    added: '2026-05-18'
+  - ticker: NKE
+    name: NIKE Inc
+    thesis: Footwear company heavily dependent on Asian manufacturing faces significant
+      tariff impact
+    status: active
+    added: '2026-05-18'
+  - ticker: LULU
+    name: Lululemon Athletica Inc
+    thesis: Athletic apparel brand with Asian supply chain exposure faces margin pressure
+      from tariffs
+    status: active
+    added: '2026-05-18'
+  - ticker: BBY
+    name: Best Buy Co Inc
+    thesis: Electronics retailer selling primarily imported consumer electronics faces
+      cost pressures
+    status: active
+    added: '2026-05-18'
+  - ticker: TPG
+    name: TPG Inc
+    thesis: Import-dependent toy and consumer goods company faces rising input costs
+    status: active
+    added: '2026-05-18'
+  - ticker: POOL
+    name: Pool Corporation
+    thesis: Pool equipment distributor with significant imported product exposure
+      faces margin compression
+    status: active
+    added: '2026-05-18'
+  - ticker: WSM
+    name: Williams-Sonoma Inc
+    thesis: Home furnishing retailer with heavy import dependency faces rising costs
+      from tariffs
+    status: active
+    added: '2026-05-18'
+pairs:
+  hints:
+  - long: NUE
+    short: COST
+    rationale: Steel tariffs benefit domestic producers while hurting import-dependent
+      retailers
+  - long: CLF
+    short: BBY
+    rationale: Domestic steel gains from protection while electronics retailer faces
+      input cost inflation
+  - long: CF
+    short: NKE
+    rationale: Agricultural protection benefits domestic fertilizer while apparel
+      faces manufacturing cost increases
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
