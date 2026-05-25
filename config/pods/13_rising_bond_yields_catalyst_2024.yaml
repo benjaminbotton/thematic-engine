@@ -1,0 +1,149 @@
+pod_id: rising_bond_yields_catalyst_2024
+name: Rising Bond Yields Pressure Divergence
+status: ACTIVE
+created_date: '2026-05-25'
+source: llm_generated
+thesis:
+  core: Rising bond yields are creating a fundamental shift in asset allocation dynamics,
+    benefiting financial institutions that earn from higher rates while pressuring
+    high-multiple growth stocks and rate-sensitive sectors that depend on cheap capital.
+  long: Banks, insurers, and financial services companies benefit directly from rising
+    yields through improved net interest margins, higher investment income, and reduced
+    present value of liabilities. These sectors have been undervalued during the low-rate
+    environment and now face a structural tailwind.
+  short: High-growth technology stocks, REITs, and utilities face fundamental headwinds
+    as rising yields increase discount rates for future cash flows, compress multiples,
+    and create competition from risk-free alternatives. These rate-sensitive sectors
+    are particularly vulnerable after extended valuations built on zero-rate assumptions.
+  last_validated: '2026-05-25'
+  confidence: 85
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Rising bond yields are creating a fundamental shift in asset allocation
+    dynamics, benefiting financi
+  notes: Claude API
+evolution_log:
+- date: '2026-05-25'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: RF
+    name: Regions Financial Corp
+    thesis: Regional bank benefits from rising net interest margins and loan growth
+      in higher rate environment
+    status: active
+    added: '2026-05-25'
+  - ticker: FITB
+    name: Fifth Third Bancorp
+    thesis: Midwest regional bank with strong deposit base to capitalize on yield
+      curve steepening
+    status: active
+    added: '2026-05-25'
+  - ticker: KEY
+    name: KeyCorp
+    thesis: Commercial banking franchise benefits from higher spreads and improved
+      lending margins
+    status: active
+    added: '2026-05-25'
+  - ticker: PNC
+    name: PNC Financial Services
+    thesis: Diversified regional bank with significant interest rate sensitivity upside
+    status: active
+    added: '2026-05-25'
+  - ticker: MTB
+    name: M&T Bank Corp
+    thesis: Northeast regional bank with strong commercial lending exposure to rate
+      increases
+    status: active
+    added: '2026-05-25'
+  - ticker: PRU
+    name: Prudential Financial
+    thesis: Insurance company benefits from higher investment yields on new money
+      and reserves
+    status: active
+    added: '2026-05-25'
+  - ticker: AIG
+    name: American International Group
+    thesis: Property & casualty insurer gains from higher yields on float and investment
+      portfolio
+    status: active
+    added: '2026-05-25'
+  - ticker: BK
+    name: Bank of New York Mellon
+    thesis: Custody bank benefits from higher rates on client deposits and securities
+      lending
+    status: active
+    added: '2026-05-25'
+  short:
+  - ticker: RGEN
+    name: Repligen Corp
+    thesis: High-growth biotech tools company vulnerable to multiple compression from
+      rising discount rates
+    status: active
+    added: '2026-05-25'
+  - ticker: DXCM
+    name: DexCom Inc
+    thesis: Medical device growth stock trading at high multiples sensitive to rate-driven
+      valuation pressure
+    status: active
+    added: '2026-05-25'
+  - ticker: ENPH
+    name: Enphase Energy
+    thesis: Solar technology company with high growth multiples vulnerable to rising
+      cost of capital
+    status: active
+    added: '2026-05-25'
+  - ticker: AMT
+    name: American Tower Corp
+    thesis: Cell tower REIT with long-duration cash flows highly sensitive to interest
+      rate increases
+    status: active
+    added: '2026-05-25'
+  - ticker: SPG
+    name: Simon Property Group
+    thesis: Retail REIT facing dual pressure from rising rates and high debt refinancing
+      costs
+    status: active
+    added: '2026-05-25'
+  - ticker: EXR
+    name: Extended Stay America
+    thesis: Self-storage REIT with significant rate sensitivity and refinancing risk
+    status: active
+    added: '2026-05-25'
+  - ticker: ED
+    name: Consolidated Edison
+    thesis: Utility with bond-like characteristics facing yield competition and higher
+      financing costs
+    status: active
+    added: '2026-05-25'
+  - ticker: NEE
+    name: NextEra Energy
+    thesis: Renewable utility with massive capex needs vulnerable to higher cost of
+      capital
+    status: active
+    added: '2026-05-25'
+pairs:
+  hints:
+  - long: RF
+    short: AMT
+    rationale: 'Direct rate sensitivity contrast: regional bank benefits vs. REIT
+      with long-duration cash flows hurt by rising yields'
+  - long: PRU
+    short: DXCM
+    rationale: Insurance company gaining from higher investment yields vs. high-multiple
+      medical device stock facing valuation compression
+  - long: KEY
+    short: ENPH
+    rationale: Traditional bank gaining margin expansion vs. high-growth solar stock
+      vulnerable to higher discount rates
+  - long: PNC
+    short: SPG
+    rationale: Regional bank benefiting from rate increases vs. REIT facing refinancing
+      pressures and yield competition
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
