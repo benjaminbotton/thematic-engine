@@ -1,0 +1,153 @@
+pod_id: EUPHORIA_REALITY_GAP_001
+name: Market Euphoria vs Economic Reality Divergence
+status: ACTIVE
+created_date: '2026-06-01'
+source: llm_generated
+thesis:
+  core: Record stock market highs are masking underlying economic stress signals (recession
+    indicators triggering, 2/3 Americans cutting spending, oil shock concerns, Fed
+    warnings) creating a bifurcated market where defensive value plays outperform
+    vulnerable growth momentum stocks as reality reasserts itself.
+  long: Defensive sectors and value stocks with strong fundamentals will outperform
+    as economic headwinds materialize. These companies benefit from flight-to-quality
+    dynamics, reasonable valuations providing downside protection, and business models
+    that perform well during economic stress. Consumer staples, utilities, healthcare,
+    and financial services with strong balance sheets should see relative outperformance.
+  short: High-multiple growth stocks and speculative plays are vulnerable to multiple
+    compression as economic reality catches up to market euphoria. These companies
+    face headwinds from reduced consumer spending, higher cost of capital, and valuation
+    corrections as investors reassess risk. Technology, discretionary consumer, and
+    momentum names trading at premium valuations are most at risk.
+  last_validated: '2026-06-01'
+  confidence: 0.85
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Record stock market highs are masking underlying economic stress signals
+    (recession indicators trigg
+  notes: Claude API
+evolution_log:
+- date: '2026-06-01'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: WMT
+    name: Walmart Inc
+    thesis: Defensive consumer staple benefits from consumers cutting spending and
+      trading down during economic stress
+    status: active
+    added: '2026-06-01'
+  - ticker: PG
+    name: Procter & Gamble
+    thesis: Essential consumer products with pricing power provide stability when
+      consumers reduce discretionary spending
+    status: active
+    added: '2026-06-01'
+  - ticker: JNJ
+    name: Johnson & Johnson
+    thesis: Healthcare giant with defensive characteristics and steady cash flows
+      during economic uncertainty
+    status: active
+    added: '2026-06-01'
+  - ticker: KO
+    name: Coca-Cola
+    thesis: Consumer staple with global diversification and recession-resistant demand
+      profile
+    status: active
+    added: '2026-06-01'
+  - ticker: NEE
+    name: NextEra Energy
+    thesis: Regulated utility with predictable cash flows and defensive characteristics
+      during market volatility
+    status: active
+    added: '2026-06-01'
+  - ticker: BAC
+    name: Bank of America
+    thesis: Large bank positioned to benefit from potential Fed policy changes and
+      trading at reasonable valuation
+    status: active
+    added: '2026-06-01'
+  - ticker: XOM
+    name: Exxon Mobil
+    thesis: Energy stock benefits from oil shock concerns and geopolitical tensions
+      mentioned in headlines
+    status: active
+    added: '2026-06-01'
+  - ticker: BRK.B
+    name: Berkshire Hathaway Class B
+    thesis: Defensive conglomerate with strong balance sheet provides safe haven during
+      market uncertainty
+    status: active
+    added: '2026-06-01'
+  short:
+  - ticker: NVDA
+    name: NVIDIA Corporation
+    thesis: High-multiple AI stock vulnerable to growth multiple compression as economic
+      reality sets in
+    status: active
+    added: '2026-06-01'
+  - ticker: TSLA
+    name: Tesla Inc
+    thesis: Premium discretionary purchase vulnerable to consumer spending cuts and
+      valuation correction
+    status: active
+    added: '2026-06-01'
+  - ticker: AMZN
+    name: Amazon.com Inc
+    thesis: E-commerce and cloud growth story faces headwinds from reduced consumer
+      and business spending
+    status: active
+    added: '2026-06-01'
+  - ticker: NFLX
+    name: Netflix Inc
+    thesis: Discretionary entertainment service vulnerable to consumer spending cuts
+      and multiple compression
+    status: active
+    added: '2026-06-01'
+  - ticker: SHOP
+    name: Shopify Inc
+    thesis: E-commerce platform exposed to reduced consumer spending and small business
+      stress
+    status: active
+    added: '2026-06-01'
+  - ticker: ZM
+    name: Zoom Video Communications
+    thesis: High-multiple tech stock vulnerable to growth slowdown and return to normalcy
+    status: active
+    added: '2026-06-01'
+  - ticker: PTON
+    name: Peloton Interactive
+    thesis: Discretionary fitness equipment vulnerable to consumer spending cuts and
+      valuation reset
+    status: active
+    added: '2026-06-01'
+  - ticker: ROKU
+    name: Roku Inc
+    thesis: Streaming platform vulnerable to advertising pullbacks and consumer discretionary
+      pressure
+    status: active
+    added: '2026-06-01'
+pairs:
+  hints:
+  - long: WMT
+    short: TSLA
+    rationale: Consumer trade-down vs luxury discretionary spending compression
+  - long: PG
+    short: NFLX
+    rationale: Essential products vs discretionary entertainment during spending cuts
+  - long: JNJ
+    short: NVDA
+    rationale: Defensive healthcare vs high-multiple growth vulnerable to reality
+      check
+  - long: XOM
+    short: SHOP
+    rationale: Oil shock beneficiary vs e-commerce vulnerable to spending slowdown
+  - long: BAC
+    short: ROKU
+    rationale: Value banking play vs high-multiple streaming vulnerable to ad pullbacks
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
