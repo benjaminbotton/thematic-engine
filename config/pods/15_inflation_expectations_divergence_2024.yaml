@@ -1,0 +1,143 @@
+pod_id: inflation_expectations_divergence_2024
+name: Inflation Expectations Divergence Trade
+status: ACTIVE
+created_date: '2026-06-08'
+source: llm_generated
+thesis:
+  core: Rising bond yields and inflation concerns are creating a clear bifurcation
+    between rate-sensitive sectors (negatively impacted) and inflation-beneficiary
+    sectors (positively positioned).
+  long: Companies with pricing power, hard assets, or businesses that benefit from
+    rising rates/inflation will outperform as markets price in persistent inflationary
+    pressures and higher-for-longer rate environment.
+  short: High-multiple, rate-sensitive sectors with limited pricing power will underperform
+    as rising yields compress valuations and higher input costs pressure margins.
+  last_validated: '2026-06-08'
+  confidence: 8.5
+  invalidation_triggers:
+  - LLM-generated — review weekly
+watch_events:
+- event: Auto-generated catalyst
+  expected: ongoing
+  status: active
+  impact: Rising bond yields and inflation concerns are creating a clear bifurcation
+    between rate-sensitive se
+  notes: Claude API
+evolution_log:
+- date: '2026-06-08'
+  note: Auto-generated from 20 headlines
+watchlist:
+  long:
+  - ticker: JPM
+    name: JPMorgan Chase & Co
+    thesis: Rising rates expand net interest margins and loan growth accelerates in
+      inflationary environment
+    status: active
+    added: '2026-06-08'
+  - ticker: WFC
+    name: Wells Fargo & Company
+    thesis: Regional bank with significant rate sensitivity and improving credit metrics
+      in rising rate cycle
+    status: active
+    added: '2026-06-08'
+  - ticker: FCX
+    name: Freeport-McMoRan Inc
+    thesis: Copper and gold mining benefits from inflation hedge demand and infrastructure
+      spending
+    status: active
+    added: '2026-06-08'
+  - ticker: CF
+    name: CF Industries Holdings Inc
+    thesis: Fertilizer producer benefits from commodity inflation and agricultural
+      pricing power
+    status: active
+    added: '2026-06-08'
+  - ticker: MPC
+    name: Marathon Petroleum Corporation
+    thesis: Refining margins expand with energy inflation and crack spreads widen
+    status: active
+    added: '2026-06-08'
+  - ticker: CAT
+    name: Caterpillar Inc
+    thesis: Heavy machinery pricing power and infrastructure demand in inflationary
+      cycle
+    status: active
+    added: '2026-06-08'
+  - ticker: NUE
+    name: Nucor Corporation
+    thesis: Steel producer benefits from commodity inflation and infrastructure spending
+      tailwinds
+    status: active
+    added: '2026-06-08'
+  - ticker: APA
+    name: APA Corporation
+    thesis: Oil and gas producer directly benefits from energy inflation and higher
+      commodity prices
+    status: active
+    added: '2026-06-08'
+  short:
+  - ticker: ARKK
+    name: ARK Innovation ETF
+    thesis: High-multiple growth stocks face valuation compression from rising discount
+      rates
+    status: active
+    added: '2026-06-08'
+  - ticker: RGEN
+    name: Repligen Corporation
+    thesis: Biotech tools company with high valuation multiple vulnerable to rate-driven
+      multiple compression
+    status: active
+    added: '2026-06-08'
+  - ticker: PAYC
+    name: Paycom Software Inc
+    thesis: High-multiple SaaS company faces margin pressure from wage inflation and
+      rate sensitivity
+    status: active
+    added: '2026-06-08'
+  - ticker: ENPH
+    name: Enphase Energy Inc
+    thesis: Solar equipment company hurt by rising rates impacting project financing
+      and valuations
+    status: active
+    added: '2026-06-08'
+  - ticker: ROKU
+    name: Roku Inc
+    thesis: Streaming platform with advertising model pressured by consumer spending
+      shifts in inflation
+    status: active
+    added: '2026-06-08'
+  - ticker: TDOC
+    name: Teladoc Health Inc
+    thesis: Telehealth company with high cash burn vulnerable to funding costs and
+      multiple compression
+    status: active
+    added: '2026-06-08'
+  - ticker: CRWD
+    name: CrowdStrike Holdings Inc
+    thesis: High-multiple cybersecurity stock facing valuation pressure from rising
+      rates
+    status: active
+    added: '2026-06-08'
+  - ticker: ZM
+    name: Zoom Video Communications
+    thesis: Video communications company with declining growth facing rate-driven
+      multiple compression
+    status: active
+    added: '2026-06-08'
+pairs:
+  hints:
+  - long: JPM
+    short: PAYC
+    rationale: Banks benefit from rising rates while high-multiple tech faces funding
+      cost pressures
+  - long: FCX
+    short: ENPH
+    rationale: Commodity inflation benefits miners while hurting rate-sensitive renewable
+      energy equipment
+  - long: MPC
+    short: ROKU
+    rationale: Energy inflation benefits refiners while pressuring consumer discretionary
+      spending on streaming
+  spread_params:
+    lean_allowed: true
+    max_lean_ratio: 0.55
